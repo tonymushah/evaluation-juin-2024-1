@@ -1,4 +1,6 @@
 mod error;
+pub mod graphql;
+pub mod models;
 
 pub use error::Error;
 
