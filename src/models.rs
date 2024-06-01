@@ -1,3 +1,5 @@
+pub mod categorie;
+
 use diesel::{
     pg::Pg,
     query_builder::{AstPass, Query, QueryFragment, QueryId},
