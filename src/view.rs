@@ -43,3 +43,11 @@ diesel::table! {
         temps -> Int4
     }
 }
+
+diesel::table! {
+    v_equipe_point(equipe) {
+        equipe -> Int4,
+        points -> Int4,
+        temps -> Int4
+    }
+}
