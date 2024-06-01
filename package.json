@@ -17,7 +17,9 @@
 		"backend:admin": "cargo run --bin admin",
 		"codegen:admin": "pnpm backend:admin && pnpm codegen -c ./app/codegen/admin.ts",
 		"backend:equipe": "cargo run --bin equipe",
-		"codegen:equipe": "pnpm backend:equipe && pnpm codegen -c ./app/codegen/equipe.ts"
+		"codegen:equipe": "pnpm backend:equipe && pnpm codegen -c ./app/codegen/equipe.ts",
+		"codegen:all": "pnpm codegen:admin && pnpm codegen:equipe",
+		"backend": "pnpm codegen:all && cargo run"
 	},
 	"devDependencies": {
 		"@graphql-codegen/cli": "^5.0.2",
