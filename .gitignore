@@ -13,3 +13,4 @@ vite.config.ts.timestamp-*
 # Added by cargo
 
 /target
+.~lock.Timesheet-evaluation.xlsx#

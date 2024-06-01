@@ -27,5 +27,15 @@
         "editor.formatOnSave": true
     },
     "rust-analyzer.procMacro.enable": true,
-    "rust-analyzer.cargo.buildScripts.enable": true
+    "rust-analyzer.cargo.buildScripts.enable": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".~lock.Timesheet-evaluation.xlsx#": true
+    },
+    "explorerExclude.backup": {}
 }
