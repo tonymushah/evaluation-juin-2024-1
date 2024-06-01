@@ -5,6 +5,7 @@ use actix_web::{
 };
 use dotenvy::dotenv;
 use evaluation_juin_2024_1::{
+    graphql::admin::{admin, admin_graphiql},
     ServerState,
 };
 
@@ -25,6 +26,8 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(cors)
             .app_data(state.clone())
+            .service(admin)
+            .service(admin_graphiql)
     })
     .bind((adress, port))?
     .run()
