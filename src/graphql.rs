@@ -3,6 +3,7 @@ use async_graphql::{Context, InputObject, SimpleObject};
 use diesel::{query_dsl::methods::LoadQuery, PgConnection, QueryResult};
 
 pub mod admin;
+pub mod equipe;
 
 use crate::{models::Paginated, DbPool, DbPoolConnection, ServerState};
 

@@ -3,7 +3,7 @@ pub mod graphql;
 pub mod models;
 
 pub use error::Error;
-use graphql::admin::AdminSchema;
+use graphql::{admin::AdminSchema, equipe::EquipeSchema};
 
 pub type Result<T, E = crate::error::Error> = std::result::Result<T, E>;
 
@@ -35,14 +35,15 @@ pub fn etablish_connection() -> DbPool {
 pub struct ServerState {
     pub db: DbPool,
     pub admin: AdminSchema,
-    //pub point_vente: PointVenteSchema,
+    pub equipe: EquipeSchema,
 }
 
 impl Default for ServerState {
     fn default() -> Self {
         Self {
             db: etablish_connection(),
-            admin: AdminSchema::default(), //point_vente: PointVenteSchema::default(),
+            admin: AdminSchema::default(),
+            equipe: EquipeSchema::default(),
         }
     }
 }
