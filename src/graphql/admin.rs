@@ -8,6 +8,7 @@ use crate::ServerState;
 
 use self::query::AdminQueries;
 
+pub mod mutations;
 pub mod query;
 
 type AdminSchemaInner = Schema<AdminQueries, EmptyMutation, EmptySubscription>;
