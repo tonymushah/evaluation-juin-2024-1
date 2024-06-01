@@ -24,6 +24,7 @@ use crate::schema::equipe;
 #[diesel(primary_key(id_equipe))]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Equipe {
+    #[graphql(default_with = "Uuid::new_v4()")]
     pub id_equipe: Uuid,
     pub pseudo: String,
     pub mot_passe: String,
