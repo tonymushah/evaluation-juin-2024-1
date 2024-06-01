@@ -17,6 +17,14 @@ diesel::table! {
 }
 
 diesel::table! {
+    coureur_categorie (id_coureur_categorie) {
+        id_coureur_categorie -> Uuid,
+        categorie -> Uuid,
+        coureur -> Int4,
+    }
+}
+
+diesel::table! {
     equipe (id_equipe) {
         id_equipe -> Uuid,
         pseudo -> Text,
@@ -25,8 +33,12 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(coureur_categorie -> categorie (categorie));
+diesel::joinable!(coureur_categorie -> coureur (coureur));
+
 diesel::allow_tables_to_appear_in_same_query!(
     categorie,
     coureur,
+    coureur_categorie,
     equipe,
 );
