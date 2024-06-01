@@ -1,5 +1,6 @@
 pub mod categorie;
 pub mod coureur;
+pub mod equipe;
 
 use diesel::{
     pg::Pg,
