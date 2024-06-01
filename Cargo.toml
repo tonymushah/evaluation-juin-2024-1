@@ -1,0 +1,35 @@
+[package]
+name = "evaluation-juin-2024-1"
+version = "0.1.0"
+edition = "2021"
+default-run = "evaluation-juin-2024-1"
+exclude = ["/app", "/node_modules"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+diesel = { version = "2.1.0", features = [
+    "postgres",
+    "r2d2",
+    "uuid",
+    "time",
+    "numeric",
+] }
+dotenvy = "0.15"
+actix-web = "4"
+async-graphql = { version = "7", features = ["uuid", "time", "bigdecimal"] }
+uuid = "1"
+dsync = { version = "0", default-features = false }
+jwt = "0.16.0"
+serde = { version = "1.0.201", features = ["derive"] }
+anyhow = "1.0.83"
+thiserror = "1.0.60"
+async-graphql-actix-web = "7.0.5"
+hmac = "0.12.1"
+sha2 = "0.10.8"
+time = { version = "0.3.36", features = [
+    "serde",
+    "macros",
+    "serde-human-readable",
+] }
+bigdecimal = { version = "0.4.3", features = ["serde"] }
+actix-cors = "0.7.0"
