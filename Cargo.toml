@@ -18,7 +18,6 @@ dotenvy = "0.15"
 actix-web = "4"
 async-graphql = { version = "7", features = ["uuid", "time", "bigdecimal"] }
 uuid = "1"
-dsync = { version = "0", default-features = false }
 jwt = "0.16.0"
 serde = { version = "1.0.201", features = ["derive"] }
 anyhow = "1.0.83"
