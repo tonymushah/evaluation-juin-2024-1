@@ -3,7 +3,10 @@ pub mod graphql;
 pub mod models;
 
 pub use error::Error;
-use graphql::{admin::AdminSchema, equipe::EquipeSchema};
+use graphql::{
+    admin::AdminSchema,
+    equipe::{token::ClientHmac, EquipeSchema},
+};
 
 pub type Result<T, E = crate::error::Error> = std::result::Result<T, E>;
 
@@ -36,6 +39,7 @@ pub struct ServerState {
     pub db: DbPool,
     pub admin: AdminSchema,
     pub equipe: EquipeSchema,
+    pub client_hmac: ClientHmac,
 }
 
 impl Default for ServerState {
@@ -44,6 +48,7 @@ impl Default for ServerState {
             db: etablish_connection(),
             admin: AdminSchema::default(),
             equipe: EquipeSchema::default(),
+            client_hmac: ClientHmac::extract(),
         }
     }
 }

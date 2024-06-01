@@ -9,6 +9,7 @@ use crate::ServerState;
 use self::query::EquipeQueries;
 
 pub mod query;
+pub mod token;
 
 type EquipeSchemaInner = Schema<EquipeQueries, EmptyMutation, EmptySubscription>;
 
