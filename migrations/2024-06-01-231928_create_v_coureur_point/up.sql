@@ -1,0 +1,9 @@
+-- Your SQL goes here
+create view v_coureur_point as 
+SELECT
+	TE.COUREUR,
+	SUM(TE.POINTS) AS POINTS,
+	SUM(TE.TEMPS) AS TEMPS
+FROM
+	V_TEMPS_COUREUR_ETAPE_EQUIPE_COUREUR AS TE
+GROUP BY te.coureur;

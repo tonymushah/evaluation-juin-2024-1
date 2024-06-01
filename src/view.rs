@@ -35,3 +35,11 @@ diesel::table! {
         nom_equipe -> Text
     }
 }
+
+diesel::table! {
+    v_coureur_point(coureur) {
+        coureur -> Int4,
+        points -> Int4,
+        temps -> Int4
+    }
+}
