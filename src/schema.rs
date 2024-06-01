@@ -41,6 +41,15 @@ diesel::table! {
     }
 }
 
+diesel::table! {
+    etape (rang) {
+        rang -> Int4,
+        longueur -> Numeric,
+        nom -> Text,
+        nb_coureur_par_equipe -> Int4,
+    }
+}
+
 diesel::joinable!(coureur_categorie -> categorie (categorie));
 diesel::joinable!(coureur_categorie -> coureur (coureur));
 diesel::joinable!(equipe_coureur -> coureur (coureur));
@@ -52,4 +61,5 @@ diesel::allow_tables_to_appear_in_same_query!(
     coureur_categorie,
     equipe,
     equipe_coureur,
+    etape,
 );
