@@ -50,10 +50,22 @@ diesel::table! {
     }
 }
 
+diesel::table! {
+    temps_coureur (id_temps_coureur) {
+        id_temps_coureur -> Uuid,
+        temps -> Nullable<Int4>,
+        points -> Nullable<Int4>,
+        equipe_coureur -> Uuid,
+        etape -> Int4,
+    }
+}
+
 diesel::joinable!(coureur_categorie -> categorie (categorie));
 diesel::joinable!(coureur_categorie -> coureur (coureur));
 diesel::joinable!(equipe_coureur -> coureur (coureur));
 diesel::joinable!(equipe_coureur -> equipe (equipe));
+diesel::joinable!(temps_coureur -> equipe_coureur (equipe_coureur));
+diesel::joinable!(temps_coureur -> etape (etape));
 
 diesel::allow_tables_to_appear_in_same_query!(
     categorie,
@@ -62,4 +74,5 @@ diesel::allow_tables_to_appear_in_same_query!(
     equipe,
     equipe_coureur,
     etape,
+    temps_coureur,
 );
