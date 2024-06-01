@@ -15,7 +15,7 @@
 		"test:unit": "vitest",
 		"codegen": "graphql-codegen",
 		"backend:admin": "cargo run --bin admin",
-		"codegen:magasin": "pnpm backend:admin && pnpm codegen -c ./app/codegen/admin.ts"
+		"codegen:admin": "pnpm backend:admin && pnpm codegen -c ./app/codegen/admin.ts"
 	},
 	"devDependencies": {
 		"@graphql-codegen/cli": "^5.0.2",
