@@ -51,6 +51,13 @@ diesel::table! {
 }
 
 diesel::table! {
+    points (rang) {
+        rang -> Int4,
+        valeur -> Int4,
+    }
+}
+
+diesel::table! {
     temps_coureur (id_temps_coureur) {
         id_temps_coureur -> Uuid,
         temps -> Nullable<Int4>,
@@ -74,5 +81,6 @@ diesel::allow_tables_to_appear_in_same_query!(
     equipe,
     equipe_coureur,
     etape,
+    points,
     temps_coureur,
 );
