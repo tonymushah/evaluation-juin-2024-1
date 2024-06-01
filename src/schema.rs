@@ -16,7 +16,17 @@ diesel::table! {
     }
 }
 
+diesel::table! {
+    equipe (id_equipe) {
+        id_equipe -> Uuid,
+        pseudo -> Text,
+        mot_passe -> Text,
+        nom -> Text,
+    }
+}
+
 diesel::allow_tables_to_appear_in_same_query!(
     categorie,
     coureur,
+    equipe,
 );
