@@ -2,8 +2,6 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const BASE = 'admin';
 
-const GEN = `app/lib/${BASE}/gql/`;
-
 const config: CodegenConfig = {
 	schema: `./app/schemas/${BASE}.graphqls`,
 	documents: [
@@ -14,7 +12,7 @@ const config: CodegenConfig = {
 	],
 	ignoreNoDocuments: true, // for better experience with the watcher
 	generates: {
-		GEN: {
+		[`app/lib/${BASE}/gql/`]: {
 			preset: 'client',
 			config: {
 				useTypeImports: true
