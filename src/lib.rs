@@ -2,6 +2,7 @@ mod error;
 pub mod graphql;
 pub mod models;
 pub(crate) mod schema;
+pub(crate) mod view;
 
 pub use error::Error;
 use graphql::{
