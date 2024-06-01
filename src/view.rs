@@ -23,3 +23,15 @@ diesel::table! {
         equipe -> Uuid
     }
 }
+
+diesel::table! {
+    v_equipe_coureur(coureur, equipe) {
+        coureur -> Int4,
+        equipe -> Uuid,
+        nom_coureur -> Text,
+        genre -> Int4,
+        dtn -> Date,
+        pseudo_equipe -> Text,
+        nom_equipe -> Text
+    }
+}
