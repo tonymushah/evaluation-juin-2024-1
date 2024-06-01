@@ -1,38 +1,31 @@
-# create-svelte
+# Evaluation Juin 2024 (N*1)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This is the continuation of my school internship exam.
 
-## Creating a project
+[Last time](https://github.com/tonymushah/evaluation-stage-mai-2023), i failed... but after [some training](https://github.com/tonymushah/evaluation-p14-training-1), I'm sure i can this.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Techstack
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### Database
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+I use [PostgreSQL][psql] as a Database.
 
-## Developing
+### Backend
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+I use [Rust][rust], [Diesel][diesel] as an ORM, [Actix Web][actix-web] as a web server and [Async GraphQL][async-graphql] as an API Layer.
 
-```bash
-npm run dev
+### Frontend
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+I use [Svelte][svelte] (to be precise [Svelte Kit][svelte-kit]) as a frontend framework, [TailwindCSS][tailwind] and [Flowbite-for-svelte](https://flowbite-svelte.com/) for the styling and [urql] as a connector to the backend.
 
-## Building
+Wish me luck!☺️
 
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+[rust]: https://www.rust-lang.org/
+[async-graphql]: https://async-graphql.github.io/
+[psql]: https://www.postgresql.org/
+[diesel]: https://diesel.rs/
+[tailwind]: https://tailwindcss.com/
+[svelte]: https://svelte.dev/
+[urql]: https://commerce.nearform.com/open-source/urql/docs/basics/svelte/
+[actix-web]: https://actix.rs/
+[svelte-kit]: https://kit.svelte.dev/
