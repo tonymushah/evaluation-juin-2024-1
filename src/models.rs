@@ -3,6 +3,7 @@ pub mod coureur;
 pub mod equipe;
 pub mod equipe_coureur;
 pub mod etape;
+pub mod points;
 pub mod temps_coureur;
 
 use diesel::{
