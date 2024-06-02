@@ -1,7 +1,6 @@
 use async_graphql::{InputObject, SimpleObject};
 use bigdecimal::BigDecimal;
 use diesel::prelude::*;
-use uuid::Uuid;
 
 use crate::schema::etape;
 
