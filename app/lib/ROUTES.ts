@@ -11,6 +11,9 @@
 const PAGES = {
   "/": `/`,
   "/admin": `/admin`,
+  "/admin/etape/[rang]": (params: { rang: (string | number) }) => {
+    return `/admin/etape/${params.rang}`
+  },
   "/admin/login": `/admin/login`,
   "/equipe": `/equipe`,
   "/equipe/etape/[id]": (params: { id: (string | number) }) => {
@@ -140,9 +143,9 @@ export function route<T extends keyof AllTypes>(key: T, ...params: any[]): strin
 * ```
 */
 export type KIT_ROUTES = {
-  PAGES: { '/': never, '/admin': never, '/admin/login': never, '/equipe': never, '/equipe/etape/[id]': 'id', '/equipe/login': never }
+  PAGES: { '/': never, '/admin': never, '/admin/etape/[rang]': 'rang', '/admin/login': never, '/equipe': never, '/equipe/etape/[id]': 'id', '/equipe/login': never }
   SERVERS: Record<string, never>
   ACTIONS: Record<string, never>
   LINKS: Record<string, never>
-  Params: { id: never }
+  Params: { rang: never, id: never }
 }
