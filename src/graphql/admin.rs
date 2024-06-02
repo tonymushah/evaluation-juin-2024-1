@@ -4,7 +4,7 @@ use actix_web::{get, post, web, HttpRequest, HttpResponse};
 use async_graphql::{http::GraphiQLSource, EmptyMutation, EmptySubscription, Schema};
 use async_graphql_actix_web::{GraphQLRequest, GraphQLResponse};
 
-use crate::ServerState;
+use crate::{reset::reset_db, ServerState};
 
 use self::query::AdminQueries;
 
@@ -41,4 +41,13 @@ pub async fn admin_graphiql() -> actix_web::Result<HttpResponse> {
     Ok(HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
         .body(GraphiQLSource::build().endpoint("/admin").finish()))
+}
+
+#[get("/admin/reset")]
+pub async fn admin_reset(state: web::Data<ServerState>) -> actix_web::Result<HttpResponse> {
+    let mut pool = state.db.clone();
+    web::block(move || reset_db(&mut pool))
+        .await?
+        .map_err(actix_web::error::ErrorInternalServerError)?;
+    Ok(HttpResponse::Ok().body("reseted"))
 }

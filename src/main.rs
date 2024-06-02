@@ -6,7 +6,7 @@ use actix_web::{
 use dotenvy::dotenv;
 use evaluation_juin_2024_1::{
     graphql::{
-        admin::{admin, admin_graphiql},
+        admin::{admin, admin_graphiql, admin_reset},
         equipe::{equipe, equipe_graphiql},
         global::{global, global_graphiql},
     },
@@ -36,6 +36,7 @@ async fn main() -> std::io::Result<()> {
             .service(equipe_graphiql)
             .service(global)
             .service(global_graphiql)
+            .service(admin_reset)
     })
     .bind((adress, port))?
     .run()
