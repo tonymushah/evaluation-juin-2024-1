@@ -11,16 +11,16 @@
 </script>
 
 <div class="flex bg-slate-300 rounded flex-col w-full">
-	<div class="flex flex-row justify-center items-center gap-2">
+	<div class="flex flex-row pl-2 items-center gap-2 text-xl">
 		<Badge>{etat}</Badge>
-		<a href={route('/equipe/etape/[id]', { id })} class="hover:text-orange-400 transition-colors">
+		<a href={route('/equipe/etape/[id]', { id })} class="hover:text-orange-700 transition-colors">
 			{nom}
 		</a>
 		<p>
 			Points: {points}
 		</p>
 	</div>
-	<div class="flex flex-wrap gap-2">
+	<div class="flex flex-wrap gap-2 m-1">
 		{#each joueurs as joueur}
 			<JoueurEtapeCard {...joueur} />
 		{:else}
