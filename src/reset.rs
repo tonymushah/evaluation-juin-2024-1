@@ -2,11 +2,10 @@ use std::env;
 
 use diesel::{dsl::sql, sql_types::Untyped, RunQueryDsl};
 
-use crate::DbPool;
+use crate::DbPoolConnection;
 
-pub fn reset_db(con: &mut DbPool) -> crate::Result<()> {
+pub fn reset_db(con: &mut DbPoolConnection) -> crate::Result<()> {
     let user = env::var("DBUSER")?;
-    sql::<Untyped>(format!("SELECT truncate_tables('{user}');").as_str())
-        .execute(&mut con.get()?)?;
+    sql::<Untyped>(format!("SELECT truncate_tables('{user}');").as_str()).execute(con)?;
     Ok(())
 }

@@ -45,7 +45,10 @@ pub async fn admin_graphiql() -> actix_web::Result<HttpResponse> {
 
 #[get("/admin/reset")]
 pub async fn admin_reset(state: web::Data<ServerState>) -> actix_web::Result<HttpResponse> {
-    let mut pool = state.db.clone();
+    let mut pool = state
+        .db
+        .get()
+        .map_err(actix_web::error::ErrorInternalServerError)?;
     web::block(move || reset_db(&mut pool))
         .await?
         .map_err(actix_web::error::ErrorInternalServerError)?;

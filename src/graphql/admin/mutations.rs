@@ -1,3 +1,22 @@
+use async_graphql::{Context, Object};
+
+use crate::{graphql::GetPoolConnection, reset::reset_db};
+
+#[derive(Debug, Clone, Copy, Default)]
+pub struct AdminMutations;
+
+#[Object]
+impl AdminMutations {
+    pub async fn reset_db(&self, ctx: &Context<'_>) -> crate::Result<bool> {
+        ctx.use_pool(|mut pool| {
+            reset_db(&mut pool)?;
+            Ok(())
+        })
+        .await?;
+        Ok(true)
+    }
+}
+
 #[macro_export]
 macro_rules! generate_crud_mutation {
     {
