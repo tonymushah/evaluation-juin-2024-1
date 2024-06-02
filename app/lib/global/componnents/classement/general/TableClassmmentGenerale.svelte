@@ -7,8 +7,8 @@
 
 <script lang="ts">
 	import { Table, TableBody } from 'flowbite-svelte';
-	import TClassHead from '../TClassHead.svelte';
-	import TClassRow from '../TClassRow.svelte';
+	import TClassHead from './TClassHead.svelte';
+	import TClassRow from './TClassRow.svelte';
 	import { readable, writable, type Readable } from 'svelte/store';
 	import { crossfade } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
