@@ -1,5 +1,6 @@
 pub mod categorie;
 pub mod coureur;
+pub mod coureur_point;
 pub mod equipe;
 pub mod equipe_coureur;
 pub mod etape;
