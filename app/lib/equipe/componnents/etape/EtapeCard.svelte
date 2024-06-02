@@ -10,7 +10,7 @@
 	export let joueurs: ComponentProps<JoueurEtapeCard>[] = [];
 </script>
 
-<div class="flex bg-slate-300 rounded flex-col">
+<div class="flex bg-slate-300 rounded flex-col w-full">
 	<div class="flex flex-row justify-center items-center gap-2">
 		<Badge>{etat}</Badge>
 		<a href={route('/equipe/etape/[id]', { id })} class="hover:text-orange-400 transition-colors">
@@ -23,6 +23,8 @@
 	<div class="flex flex-wrap gap-2">
 		{#each joueurs as joueur}
 			<JoueurEtapeCard {...joueur} />
+		{:else}
+			<h3 class="text-md">Pas de joueur selectionne</h3>
 		{/each}
 	</div>
 </div>
