@@ -3,7 +3,7 @@ use diesel::prelude::*;
 
 use crate::{
     graphql::{objects::order::GraphQLOrdering, GetPoolConnection},
-    models::equipe_point::EquipePoint,
+    models::{coureur_point::CoueurPoint, equipe_point::EquipePoint},
 };
 
 pub struct ClassementQueries;
@@ -25,6 +25,27 @@ impl ClassementQueries {
                     .get_results(&mut pool)?,
                 GraphQLOrdering::Descending => v_equipe_point
                     .select(EquipePoint::as_select())
+                    .order(points.desc())
+                    .get_results(&mut pool)?,
+            })
+        })
+        .await
+    }
+    pub async fn par_coureur(
+        &self,
+        ctx: &Context<'_>,
+        ordre: Option<GraphQLOrdering>,
+    ) -> crate::Result<Vec<CoueurPoint>> {
+        let ordre = ordre.unwrap_or(GraphQLOrdering::Descending);
+        ctx.use_pool(move |mut pool| {
+            use crate::view::v_coureur_point::dsl::*;
+            Ok(match ordre {
+                GraphQLOrdering::Ascending => v_coureur_point
+                    .select(CoueurPoint::as_select())
+                    .order(points.asc())
+                    .get_results(&mut pool)?,
+                GraphQLOrdering::Descending => v_coureur_point
+                    .select(CoueurPoint::as_select())
                     .order(points.desc())
                     .get_results(&mut pool)?,
             })
