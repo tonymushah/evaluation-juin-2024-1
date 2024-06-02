@@ -1,6 +1,7 @@
 mod error;
 pub mod graphql;
 pub mod models;
+pub mod reset;
 pub(crate) mod schema;
 pub(crate) mod view;
 
