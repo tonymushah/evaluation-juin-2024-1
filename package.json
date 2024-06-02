@@ -18,7 +18,9 @@
 		"codegen:admin": "pnpm backend:admin && pnpm codegen -c ./app/codegen/admin.ts",
 		"backend:equipe": "cargo run --bin equipe",
 		"codegen:equipe": "pnpm backend:equipe && pnpm codegen -c ./app/codegen/equipe.ts",
-		"codegen:all": "pnpm codegen:admin && pnpm codegen:equipe",
+		"backend:global": "cargo run --bin global",
+		"codegen:global": "pnpm backend:global && pnpm codegen -c ./app/codegen/global.ts",
+		"codegen:all": "pnpm codegen:global && pnpm codegen:admin && pnpm codegen:equipe",
 		"backend": "pnpm codegen:all && cargo run"
 	},
 	"devDependencies": {
