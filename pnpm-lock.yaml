@@ -8,6 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/inter':
+        specifier: ^5.0.18
+        version: 5.0.18
+      '@fontsource/fira-mono':
+        specifier: ^5.0.13
+        version: 5.0.13
+      '@fontsource/poppins':
+        specifier: ^5.0.14
+        version: 5.0.14
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
@@ -609,6 +618,15 @@ packages:
 
   '@floating-ui/utils@0.2.2':
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
+
+  '@fontsource-variable/inter@5.0.18':
+    resolution: {integrity: sha512-rJzSrtJ3b7djiGFvRuTe6stDfbYJGhdQSfn2SI2WfXviee7Er0yKAHE5u7FU7OWVQQQ1x3+cxdmx9NdiAkcrcA==}
+
+  '@fontsource/fira-mono@5.0.13':
+    resolution: {integrity: sha512-fZDjR2BdAqmauEbTjcIT62zYzbOgDa5+IQH34D2k8Pxmy1T815mAqQkZciWZVQ9dc/BgdTtTUV9HJ2ulBNwchg==}
+
+  '@fontsource/poppins@5.0.14':
+    resolution: {integrity: sha512-nmM1zpPo3Uh4JcGAVSQuWaZNYh2FbbwWhZ5t6hRaynmJaNTBW85d3nEh9zMmzI0HX7X5xqQVdRHeDatKpOGsnA==}
 
   '@graphql-codegen/add@5.0.2':
     resolution: {integrity: sha512-ouBkSvMFUhda5VoKumo/ZvsZM9P5ZTyDsI8LW18VxSNWOjrTeLXBWHG8Gfaai0HwhflPtCYVABbriEcOmrRShQ==}
@@ -3850,6 +3868,12 @@ snapshots:
       '@floating-ui/utils': 0.2.2
 
   '@floating-ui/utils@0.2.2': {}
+
+  '@fontsource-variable/inter@5.0.18': {}
+
+  '@fontsource/fira-mono@5.0.13': {}
+
+  '@fontsource/poppins@5.0.14': {}
 
   '@graphql-codegen/add@5.0.2(graphql@16.8.1)':
     dependencies:
