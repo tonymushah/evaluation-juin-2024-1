@@ -1,3 +1,5 @@
+pub mod coureur_point;
+
 use async_graphql::{InputObject, SimpleObject};
 use bigdecimal::BigDecimal;
 use diesel::prelude::*;
