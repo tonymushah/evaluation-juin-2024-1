@@ -1,4 +1,5 @@
 pub mod coureur_point;
+pub mod equipe_point;
 
 use async_graphql::{InputObject, SimpleObject};
 use bigdecimal::BigDecimal;
