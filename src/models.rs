@@ -2,6 +2,7 @@ pub mod categorie;
 pub mod coureur;
 pub mod equipe;
 pub mod equipe_coureur;
+pub mod etape;
 
 use diesel::{
     pg::Pg,
