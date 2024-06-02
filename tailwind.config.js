@@ -30,7 +30,8 @@ const config = {
 		fontFamily: {
 			mono: ["'Fira Mono'", 'monospace'],
 			serif: ["'Inter Variable'", 'sans-serif'],
-			sans: ["'Poppins'", 'sans-serif']
+			sans: ["'Poppins'", 'sans-serif'],
+			brand: ["'Freckle Face'", 'system-ui']
 		}
 	}
 };

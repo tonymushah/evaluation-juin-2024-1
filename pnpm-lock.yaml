@@ -14,6 +14,9 @@ importers:
       '@fontsource/fira-mono':
         specifier: ^5.0.13
         version: 5.0.13
+      '@fontsource/freckle-face':
+        specifier: ^5.0.20
+        version: 5.0.20
       '@fontsource/poppins':
         specifier: ^5.0.14
         version: 5.0.14
@@ -627,6 +630,9 @@ packages:
 
   '@fontsource/fira-mono@5.0.13':
     resolution: {integrity: sha512-fZDjR2BdAqmauEbTjcIT62zYzbOgDa5+IQH34D2k8Pxmy1T815mAqQkZciWZVQ9dc/BgdTtTUV9HJ2ulBNwchg==}
+
+  '@fontsource/freckle-face@5.0.20':
+    resolution: {integrity: sha512-RWBhFQbmwyebIqGxS3R0wkP/cpTlXRr/QvXSajbtVonqsTdaIAxIWnUqmQ9QItOK/5vaXc0BreclM5ofqdcFSg==}
 
   '@fontsource/poppins@5.0.14':
     resolution: {integrity: sha512-nmM1zpPo3Uh4JcGAVSQuWaZNYh2FbbwWhZ5t6hRaynmJaNTBW85d3nEh9zMmzI0HX7X5xqQVdRHeDatKpOGsnA==}
@@ -3882,6 +3888,8 @@ snapshots:
   '@fontsource-variable/inter@5.0.18': {}
 
   '@fontsource/fira-mono@5.0.13': {}
+
+  '@fontsource/freckle-face@5.0.20': {}
 
   '@fontsource/poppins@5.0.14': {}
 
