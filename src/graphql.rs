@@ -4,6 +4,7 @@ use diesel::{query_dsl::methods::LoadQuery, PgConnection, QueryResult};
 
 pub mod admin;
 pub mod equipe;
+pub mod global;
 
 use crate::{models::Paginated, DbPool, DbPoolConnection, ServerState};
 

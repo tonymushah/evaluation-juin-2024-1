@@ -8,6 +8,7 @@ pub use error::Error;
 use graphql::{
     admin::AdminSchema,
     equipe::{token::ClientHmac, EquipeSchema},
+    global::GlobalSchema,
 };
 
 pub type Result<T, E = crate::error::Error> = std::result::Result<T, E>;
@@ -42,6 +43,7 @@ pub struct ServerState {
     pub admin: AdminSchema,
     pub equipe: EquipeSchema,
     pub client_hmac: ClientHmac,
+    pub global: GlobalSchema,
 }
 
 impl Default for ServerState {
@@ -51,6 +53,7 @@ impl Default for ServerState {
             admin: AdminSchema::default(),
             equipe: EquipeSchema::default(),
             client_hmac: ClientHmac::extract(),
+            global: GlobalSchema::default(),
         }
     }
 }

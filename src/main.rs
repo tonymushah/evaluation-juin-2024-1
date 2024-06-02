@@ -8,6 +8,7 @@ use evaluation_juin_2024_1::{
     graphql::{
         admin::{admin, admin_graphiql},
         equipe::{equipe, equipe_graphiql},
+        global::{global, global_graphiql},
     },
     ServerState,
 };
@@ -33,6 +34,8 @@ async fn main() -> std::io::Result<()> {
             .service(admin_graphiql)
             .service(equipe)
             .service(equipe_graphiql)
+            .service(global)
+            .service(global_graphiql)
     })
     .bind((adress, port))?
     .run()
