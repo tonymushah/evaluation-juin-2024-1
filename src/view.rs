@@ -51,3 +51,12 @@ diesel::table! {
         temps -> Int4
     }
 }
+
+diesel::table! {
+    v_coureur_point_etape(coureur, etape) {
+        coureur -> Int4,
+        points -> Int4,
+        temps -> Int4,
+        etape -> Int4
+    }
+}
