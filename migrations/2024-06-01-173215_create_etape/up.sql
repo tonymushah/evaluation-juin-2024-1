@@ -4,5 +4,6 @@ create table etape(
     longueur DECIMAL NOT NULL,
     nom TEXT NOT NULL,
     nb_coureur_par_equipe INT NOT NULL,
-    depart TIMESTAMP not NULL
+    depart TIMESTAMP not NULL,
+    finished TIMESTAMP 
 );

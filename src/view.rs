@@ -6,7 +6,8 @@ diesel::table! {
         nb_coureur_par_equipe -> Int4,
         temps -> Int4,
         points -> Int4,
-        equipe_coureur -> Uuid
+        equipe_coureur -> Uuid,
+        depart -> Timestamp
     }
 }
 
@@ -20,7 +21,8 @@ diesel::table! {
         points -> Int4,
         equipe_coureur -> Uuid,
         coureur -> Uuid,
-        equipe -> Uuid
+        equipe -> Uuid,
+        depart -> Timestamp
     }
 }
 

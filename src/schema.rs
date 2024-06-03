@@ -48,6 +48,7 @@ diesel::table! {
         nom -> Text,
         nb_coureur_par_equipe -> Int4,
         depart -> Timestamp,
+        finished -> Nullable<Timestamp>,
     }
 }
 
