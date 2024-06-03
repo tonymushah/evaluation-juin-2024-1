@@ -2,10 +2,8 @@ use async_graphql::{Context, Object};
 use diesel::prelude::*;
 
 use crate::{
-    graphql::{objects::order::GraphQLOrdering, GetPoolConnection, OffsetLimit, ResultsData},
-    models::{
-        categorie::Categorie, coureur_point::CoueurPoint, equipe_point::EquipePoint, Paginate,
-    },
+    graphql::{objects::order::GraphQLOrdering, GetPoolConnection},
+    models::{coureur_point::CoueurPoint, equipe_point::EquipePoint},
 };
 
 pub struct ClassementQueries;
@@ -51,20 +49,6 @@ impl ClassementQueries {
                     .order(points.desc())
                     .get_results(&mut pool)?,
             })
-        })
-        .await
-    }
-    pub async fn categories(
-        &self,
-        ctx: &Context<'_>,
-        pagination: OffsetLimit,
-    ) -> crate::Result<ResultsData<Categorie>> {
-        ctx.use_pool(move |mut pool| {
-            use crate::schema::categorie::dsl::*;
-            Ok(categorie
-                .select(Categorie::as_select())
-                .paginate_with_param(pagination)
-                .to_results_data(&mut pool)?)
         })
         .await
     }
