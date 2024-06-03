@@ -1,17 +1,18 @@
 use std::ops::Deref;
 
 use actix_web::{get, post, web, HttpRequest, HttpResponse};
-use async_graphql::{http::GraphiQLSource, EmptyMutation, EmptySubscription, Schema};
+use async_graphql::{http::GraphiQLSource, EmptySubscription, Schema};
 use async_graphql_actix_web::{GraphQLRequest, GraphQLResponse};
 
 use crate::ServerState;
 
-use self::query::EquipeQueries;
+use self::{mutations::EquipeMutations, query::EquipeQueries};
 
+pub mod mutations;
 pub mod query;
 pub mod token;
 
-type EquipeSchemaInner = Schema<EquipeQueries, EmptyMutation, EmptySubscription>;
+type EquipeSchemaInner = Schema<EquipeQueries, EquipeMutations, EmptySubscription>;
 
 #[derive(Default, Clone)]
 pub struct EquipeSchema(EquipeSchemaInner);
