@@ -1,9 +1,13 @@
 use async_graphql::{Context, Object};
-use diesel::prelude::*;
+use diesel::{expression::expression_types::NotSelectable, pg::Pg, prelude::*};
+use uuid::Uuid;
 
 use crate::{
     graphql::{objects::order::GraphQLOrdering, GetPoolConnection, OffsetLimit, ResultsData},
-    models::{coureur_point::CoueurPoint, equipe_point::EquipePoint, Paginate},
+    models::{
+        classement::classement_categorie::ClassementCategorie, coureur_point::CoueurPoint,
+        equipe_point::EquipePoint, Paginate,
+    },
 };
 
 pub struct ClassementQueries;
@@ -14,7 +18,7 @@ impl ClassementQueries {
         &self,
         ctx: &Context<'_>,
         ordre: Option<GraphQLOrdering>,
-        pagination: OffsetLimit,
+        #[graphql(default)] pagination: OffsetLimit,
     ) -> crate::Result<ResultsData<EquipePoint>> {
         let ordre = ordre.unwrap_or(GraphQLOrdering::Descending);
         ctx.use_pool(move |mut pool| {
@@ -54,6 +58,32 @@ impl ClassementQueries {
                     .paginate_with_param(pagination)
                     .to_results_data(&mut pool)?,
             })
+        })
+        .await
+    }
+    pub async fn par_categorie(
+        &self,
+        ctx: &Context<'_>,
+        ordre: Option<GraphQLOrdering>,
+        #[graphql(default)] pagination: OffsetLimit,
+        id: Uuid,
+    ) -> crate::Result<ResultsData<CoueurPoint>> {
+        let ordre = ordre.unwrap_or(GraphQLOrdering::Descending);
+        ctx.use_pool(move |mut pool| {
+            use crate::view::v_classement_categorie::dsl::*;
+            let orde: Box<
+                dyn BoxableExpression<v_classement_categorie, Pg, SqlType = NotSelectable>,
+            > = match ordre {
+                GraphQLOrdering::Ascending => Box::new(points.asc()),
+                GraphQLOrdering::Descending => Box::new(points.desc()),
+            };
+            Ok(v_classement_categorie
+                .order(orde)
+                .filter(categorie.eq(id))
+                .select(ClassementCategorie::as_select())
+                .paginate_with_param(pagination)
+                .to_results_data::<ClassementCategorie>(&mut pool)?
+                .map_into())
         })
         .await
     }
