@@ -4,6 +4,7 @@ pub mod equipe_point;
 use async_graphql::{InputObject, SimpleObject};
 use bigdecimal::BigDecimal;
 use diesel::prelude::*;
+use time::PrimitiveDateTime;
 
 use crate::schema::etape;
 
@@ -31,4 +32,6 @@ pub struct Etape {
     pub longueur: BigDecimal,
     pub nom: String,
     pub nb_coureur_par_equipe: i32,
+    pub depart: PrimitiveDateTime,
+    pub finished: Option<PrimitiveDateTime>,
 }

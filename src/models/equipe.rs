@@ -27,6 +27,7 @@ pub struct Equipe {
     #[graphql(default_with = "Uuid::new_v4()")]
     pub id_equipe: Uuid,
     pub pseudo: String,
+    #[graphql(skip)]
     pub mot_passe: String,
     pub nom: String,
 }
