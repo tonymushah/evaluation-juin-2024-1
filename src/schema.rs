@@ -47,6 +47,7 @@ diesel::table! {
         longueur -> Numeric,
         nom -> Text,
         nb_coureur_par_equipe -> Int4,
+        depart -> Timestamp,
     }
 }
 
