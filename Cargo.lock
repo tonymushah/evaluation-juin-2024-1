@@ -837,6 +837,7 @@ dependencies = [
  "dotenvy",
  "hmac",
  "jwt",
+ "regex",
  "serde",
  "sha2",
  "thiserror",

@@ -1,3 +1,5 @@
+use std::num::ParseIntError;
+
 use async_graphql::ErrorExtensions;
 use diesel::r2d2;
 
@@ -25,6 +27,14 @@ pub enum Error {
     Forbidden,
     #[error("The upsert result is not found ")]
     UpsertNotFound,
+    #[error(transparent)]
+    Regex(#[from] regex::Error),
+    #[error(transparent)]
+    ParseInt(#[from] ParseIntError),
+    #[error("can not find the capture name {0}")]
+    RegexCaptureNameNotFound(String),
+    #[error("An unexpected `std::num::TryFromIntError` was caught")]
+    TryFromInt,
 }
 
 impl From<async_graphql::Error> for Error {
@@ -101,6 +111,10 @@ impl ErrorExtensions for Error {
                 },
                 Error::Forbidden => e.set("code", "FORBIDDEN"),
                 Error::UpsertNotFound => e.set("code", "UPSERT_NOT_FOUND"),
+                Error::Regex(_) => e.set("code", "REGEX"),
+                Error::ParseInt(_) => e.set("code", "PARSE_INT"),
+                Error::RegexCaptureNameNotFound(_) => e.set("code", "REGEX_CAPTURE_NAME_NOT_FOUND"),
+                Error::TryFromInt => e.set("code", "TRY_FROM_INT"),
             })
         }
     }
