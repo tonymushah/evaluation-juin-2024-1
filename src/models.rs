@@ -93,7 +93,7 @@ impl<T> RunQueryDsl<PgConnection> for Paginated<T> {}
 impl<T> RunQueryDsl<DbPoolConnection> for Paginated<T> {}
 
 impl<T> Paginated<T> {
-    pub fn load_and_count_pages<'a, U>(self, conn: &mut PgConnection) -> QueryResult<(Vec<U>, i64)>
+    pub fn load_data<'a, U>(self, conn: &mut PgConnection) -> QueryResult<(Vec<U>, i64)>
     where
         Self: LoadQuery<'a, PgConnection, (U, i64)>,
     {

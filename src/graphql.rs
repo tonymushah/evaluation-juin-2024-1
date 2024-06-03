@@ -62,6 +62,7 @@ impl Default for OffsetLimit {
 }
 
 #[derive(Debug, Clone, SimpleObject)]
+#[graphql(concrete(name = "EtapeResults", params(crate::models::etape::Etape)))]
 pub struct ResultsData<T>
 where
     T: async_graphql::OutputType,
@@ -80,7 +81,7 @@ impl<T> Paginated<T> {
     {
         let offset = self.get_offset();
         let limit = self.get_limit();
-        let (data, total) = self.load_and_count_pages(conn)?;
+        let (data, total) = self.load_data(conn)?;
         Ok(ResultsData {
             data,
             limit,
