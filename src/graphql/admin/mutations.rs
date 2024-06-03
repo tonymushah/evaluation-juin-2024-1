@@ -2,9 +2,15 @@ pub mod etape;
 
 use self::etape::EtapeMutation;
 
+use std::ops::Deref;
+
 use async_graphql::{Context, Object};
+use jwt::SignWithKey;
+use uuid::Uuid;
 
 use crate::{graphql::GetPoolConnection, reset::reset_db};
+
+use super::token::{extract_admin_password, AdminHmac, VerifyAdminSession};
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct AdminMutations;
@@ -21,6 +27,21 @@ impl AdminMutations {
     }
     pub async fn etape(&self, id: i32) -> EtapeMutation {
         EtapeMutation(id)
+    }
+    pub async fn login(&self, ctx: &Context<'_>, password: String) -> crate::Result<String> {
+        let pass = extract_admin_password()?;
+        let sha = ctx.data::<AdminHmac>()?;
+        if pass == password {
+            let secret = Uuid::new_v4().sign_with_key(sha.deref())?;
+            ctx.update(secret.clone()).await?;
+            Ok(secret)
+        } else {
+            Err(crate::Error::Forbidden)
+        }
+    }
+    pub async fn logout(&self, ctx: &Context<'_>) -> crate::Result<bool> {
+        ctx.reset().await?;
+        Ok(true)
     }
 }
 

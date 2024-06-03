@@ -10,6 +10,7 @@ use self::query::AdminQueries;
 
 pub mod mutations;
 pub mod query;
+pub mod token;
 
 type AdminSchemaInner = Schema<AdminQueries, EmptyMutation, EmptySubscription>;
 
@@ -32,7 +33,9 @@ pub async fn admin(
     let request = gql_request
         .into_inner()
         .data(state.db.clone())
-        .data(req.headers().clone());
+        .data(req.headers().clone())
+        .data(state.admin_hmac.clone())
+        .data(state.admin_session.clone());
     state.admin.execute(request).await.into()
 }
 

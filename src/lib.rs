@@ -8,7 +8,10 @@ pub(crate) mod view;
 
 pub use error::Error;
 use graphql::{
-    admin::AdminSchema,
+    admin::{
+        token::{AdminHmac, AdminSession},
+        AdminSchema,
+    },
     equipe::{token::ClientHmac, EquipeSchema},
     global::GlobalSchema,
 };
@@ -46,6 +49,8 @@ pub struct ServerState {
     pub equipe: EquipeSchema,
     pub client_hmac: ClientHmac,
     pub global: GlobalSchema,
+    pub admin_hmac: AdminHmac,
+    pub admin_session: AdminSession,
 }
 
 impl Default for ServerState {
@@ -56,6 +61,8 @@ impl Default for ServerState {
             equipe: EquipeSchema::default(),
             client_hmac: ClientHmac::extract(),
             global: GlobalSchema::default(),
+            admin_hmac: AdminHmac::extract(),
+            admin_session: AdminSession::default(),
         }
     }
 }
