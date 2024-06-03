@@ -67,6 +67,10 @@ impl Default for OffsetLimit {
     name = "EtapeCoureurResults",
     params(self::admin::query::etape::unique::coureur::EtapeCoureur)
 ))]
+#[graphql(concrete(
+    name = "AdminEtapeResults",
+    params(self::admin::query::etape::unique::AdminEtape)
+))]
 pub struct ResultsData<T>
 where
     T: async_graphql::OutputType,
@@ -75,6 +79,31 @@ where
     pub limit: i64,
     pub offset: i64,
     pub total: i64,
+}
+
+impl<T> ResultsData<T>
+where
+    T: async_graphql::OutputType,
+{
+    pub fn map<U, B>(self, f: B) -> ResultsData<U>
+    where
+        U: async_graphql::ObjectType,
+        B: FnMut(T) -> U,
+    {
+        ResultsData {
+            limit: self.limit,
+            offset: self.offset,
+            total: self.total,
+            data: self.data.into_iter().map(f).collect(),
+        }
+    }
+    pub fn map_into<U>(self) -> ResultsData<U>
+    where
+        T: Into<U>,
+        U: async_graphql::ObjectType,
+    {
+        self.map(|i| i.into())
+    }
 }
 
 impl<T> Paginated<T> {

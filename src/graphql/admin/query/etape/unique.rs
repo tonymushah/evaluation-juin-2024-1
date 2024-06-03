@@ -14,7 +14,19 @@ use self::coureur::EtapeCoureur;
 #[graphql(complex)]
 pub struct AdminEtape {
     #[graphql(flatten)]
-    inner: Etape,
+    pub(super) inner: Etape,
+}
+
+impl From<Etape> for AdminEtape {
+    fn from(value: Etape) -> Self {
+        Self { inner: value }
+    }
+}
+
+impl From<AdminEtape> for Etape {
+    fn from(value: AdminEtape) -> Self {
+        value.inner
+    }
 }
 
 #[ComplexObject]
@@ -24,9 +36,11 @@ impl AdminEtape {
         ctx: &Context<'_>,
         pagination: OffsetLimit,
     ) -> crate::Result<ResultsData<EtapeCoureur>> {
+        let etape_ = self.inner.rang;
         ctx.use_pool(move |mut pool| {
             use crate::view::v_temps_coureur_etape_equipe_coureur::dsl::*;
             Ok(v_temps_coureur_etape_equipe_coureur
+                .filter(etape.eq(etape_))
                 .select(EtapeCoureur::as_select())
                 .paginate_with_param(pagination)
                 .to_results_data(&mut pool)?)
