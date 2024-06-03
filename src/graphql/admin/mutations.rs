@@ -1,3 +1,7 @@
+pub mod etape;
+
+use self::etape::EtapeMutation;
+
 use async_graphql::{Context, Object};
 
 use crate::{graphql::GetPoolConnection, reset::reset_db};
@@ -14,6 +18,9 @@ impl AdminMutations {
         })
         .await?;
         Ok(true)
+    }
+    pub async fn etape(&self, id: i32) -> EtapeMutation {
+        EtapeMutation(id)
     }
 }
 
