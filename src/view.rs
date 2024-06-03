@@ -84,3 +84,23 @@ diesel::table! {
         designation -> Text
     }
 }
+
+diesel::table! {
+    v_temps_coureur_etape_equipe_coureur_categorie(etape, equipe_coureur, coureur, equipe, categorie, id_cc) {
+        etape -> Integer,
+        longueur -> Numeric,
+        etape_nom -> Text,
+        nb_par_equipe -> Integer,
+        temps -> Nullable<Integer>,
+        points -> Nullable<Integer>,
+        equipe -> Uuid,
+        equipe_coureur -> Uuid,
+        coureur -> Uuid,
+        nom_coureur -> Text,
+        genre -> Integer,
+        categorie -> Uuid,
+        id_cc -> Uuid,
+        dtn -> Date,
+        designation -> Text
+    }
+}
