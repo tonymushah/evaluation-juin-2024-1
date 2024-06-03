@@ -51,11 +51,16 @@ impl DerefMut for AdminSession {
 pub trait VerifyAdminSession {
     fn is_empty(&self) -> impl Future<Output = bool> + Send;
     fn verify(&self) -> impl Future<Output = bool> + Send;
-    async fn verify_res(&self) -> crate::Result<()> {
-        if self.verify().await {
-            Ok(())
-        } else {
-            Err(crate::Error::Forbidden)
+    fn verify_res(&self) -> impl std::future::Future<Output = crate::Result<()>> + Send
+    where
+        Self: std::marker::Sync,
+    {
+        async {
+            if self.verify().await {
+                Ok(())
+            } else {
+                Err(crate::Error::Forbidden)
+            }
         }
     }
     fn reset(&self) -> impl Future<Output = crate::Result<()>> + Send;
