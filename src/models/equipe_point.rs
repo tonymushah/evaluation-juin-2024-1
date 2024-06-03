@@ -1,4 +1,5 @@
 use async_graphql::SimpleObject;
+use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 
 use crate::view::v_equipe_point;
@@ -11,6 +12,6 @@ use crate::view::v_equipe_point;
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct EquipePoint {
     pub equipe: i32,
-    pub points: i32,
-    pub temps: i32,
+    pub points: BigDecimal,
+    pub temps: BigDecimal,
 }
