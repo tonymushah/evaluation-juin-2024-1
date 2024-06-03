@@ -4,8 +4,8 @@ diesel::table! {
         longueur -> Numeric,
         nom -> Text,
         nb_coureur_par_equipe -> Int4,
-        temps -> Int4,
-        points -> Int4,
+        temps -> Nullable<Int4>,
+        points -> Nullable<Int4>,
         equipe_coureur -> Uuid,
         depart -> Timestamp
     }
@@ -17,8 +17,8 @@ diesel::table! {
         longueur -> Numeric,
         nom -> Text,
         nb_coureur_par_equipe -> Int4,
-        temps -> Int4,
-        points -> Int4,
+        temps -> Nullable<Int4>,
+        points -> Nullable<Int4>,
         equipe_coureur -> Uuid,
         coureur -> Int4,
         equipe -> Uuid,
