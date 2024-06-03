@@ -96,6 +96,7 @@ FROM
 
 create view v_equipe_coureur as 
 SELECT
+	EC.ID_EQUIPE_COUREUR,
 	EC.COUREUR,
 	EC.EQUIPE,
 	CR.NOM AS NOM_COUREUR,
@@ -145,3 +146,5 @@ create view v_equipe_point_etape as
    FROM v_temps_coureur_etape_equipe_coureur te
   GROUP BY te.equipe, te.etape;
 
+create view v_etape_rang as 
+select etape, count(*) as rang from v_temps_coureur_etape group by etape;

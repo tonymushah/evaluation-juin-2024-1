@@ -20,21 +20,22 @@ diesel::table! {
         temps -> Int4,
         points -> Int4,
         equipe_coureur -> Uuid,
-        coureur -> Uuid,
+        coureur -> Int4,
         equipe -> Uuid,
         depart -> Timestamp
     }
 }
 
 diesel::table! {
-    v_equipe_coureur(coureur, equipe) {
+    v_equipe_coureur(coureur, equipe, id_equipe_coureur) {
         coureur -> Int4,
         equipe -> Uuid,
         nom_coureur -> Text,
         genre -> Int4,
         dtn -> Date,
         pseudo_equipe -> Text,
-        nom_equipe -> Text
+        nom_equipe -> Text,
+        id_equipe_coureur -> Uuid
     }
 }
 
