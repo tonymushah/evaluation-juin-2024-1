@@ -72,3 +72,15 @@ diesel::table! {
         etape -> Int4
     }
 }
+
+diesel::table! {
+    v_coureur_categorie(id_cc, categorie, coureur) {
+        id_cc -> Uuid,
+        categorie -> Uuid,
+        coureur -> Integer,
+        nom -> Text,
+        genre -> Integer,
+        dtn -> Date,
+        designation -> Text
+    }
+}
