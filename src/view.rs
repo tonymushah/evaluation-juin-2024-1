@@ -113,3 +113,13 @@ diesel::table! {
         temps -> Numeric
     }
 }
+
+diesel::table! {
+    v_classement_categories_equipe(coureur, categorie, equipe) {
+        coureur -> Int4,
+        categorie -> Uuid,
+        equipe -> Uuid,
+        points -> Numeric,
+        temps -> Numeric
+    }
+}
