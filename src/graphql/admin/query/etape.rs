@@ -1,3 +1,5 @@
+pub mod unique;
+
 use async_graphql::{Context, Object};
 use diesel::prelude::*;
 

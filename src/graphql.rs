@@ -63,6 +63,10 @@ impl Default for OffsetLimit {
 
 #[derive(Debug, Clone, SimpleObject)]
 #[graphql(concrete(name = "EtapeResults", params(crate::models::etape::Etape)))]
+#[graphql(concrete(
+    name = "EtapeCoureurResults",
+    params(self::admin::query::etape::unique::coureur::EtapeCoureur)
+))]
 pub struct ResultsData<T>
 where
     T: async_graphql::OutputType,
