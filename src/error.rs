@@ -1,5 +1,6 @@
 use std::num::ParseIntError;
 
+use actix_web::http::header::ToStrError;
 use async_graphql::ErrorExtensions;
 use diesel::r2d2;
 
@@ -35,6 +36,8 @@ pub enum Error {
     RegexCaptureNameNotFound(String),
     #[error("An unexpected `std::num::TryFromIntError` was caught")]
     TryFromInt,
+    #[error(transparent)]
+    HeaderToStrError(#[from] ToStrError),
 }
 
 impl From<async_graphql::Error> for Error {
@@ -115,6 +118,7 @@ impl ErrorExtensions for Error {
                 Error::ParseInt(_) => e.set("code", "PARSE_INT"),
                 Error::RegexCaptureNameNotFound(_) => e.set("code", "REGEX_CAPTURE_NAME_NOT_FOUND"),
                 Error::TryFromInt => e.set("code", "TRY_FROM_INT"),
+                Error::HeaderToStrError(_) => e.set("code", "HEADER_TO_STR_ERROR"),
             })
         }
     }

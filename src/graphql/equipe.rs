@@ -31,6 +31,7 @@ pub async fn equipe(
 ) -> GraphQLResponse {
     let request = gql_request
         .into_inner()
+        .data(state.client_hmac.clone())
         .data(state.db.clone())
         .data(req.headers().clone());
     state.equipe.execute(request).await.into()
