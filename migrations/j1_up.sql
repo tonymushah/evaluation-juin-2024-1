@@ -46,8 +46,7 @@ create table etape(
     rang SERIAL PRIMARY KEY,
     longueur DECIMAL NOT NULL,
     nom TEXT NOT NULL,
-    nb_coureur_par_equipe INT NOT NULL,
-	depart TIMESTAMP not NULL
+    nb_coureur_par_equipe INT NOT NULL
 );
 
 create table temps_coureur(
