@@ -1,5 +1,3 @@
-scalar BigDecimal
-
 
 type Categorie {
 	idCategorie: UUID!
@@ -21,8 +19,8 @@ type ClassementQueries {
 
 type CoueurPoint {
 	coureur: Int!
-	points: BigDecimal!
-	temps: BigDecimal!
+	points: Int!
+	temps: Int!
 }
 
 type CoureurPointResults {
@@ -45,8 +43,8 @@ scalar Date
 
 type EquipePoint {
 	equipe: UUID!
-	points: BigDecimal!
-	temps: BigDecimal!
+	points: Int!
+	temps: Int!
 	nom: String!
 }
 
@@ -98,7 +96,7 @@ type VequipeCoureur {
 	dtn: Date!
 	nomEquipe: String!
 	idEquipeCoureur: UUID!
-	points: BigDecimal
+	points: Int
 }
 
 directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT

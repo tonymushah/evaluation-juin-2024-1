@@ -13,7 +13,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  BigDecimal: { input: any; output: any; }
   /**
    * ISO 8601 calendar date without timezone.
    * Format: %Y-%m-%d
@@ -80,8 +79,8 @@ export type ClassementQueriesParEquipeArgs = {
 export type CoueurPoint = {
   __typename?: 'CoueurPoint';
   coureur: Scalars['Int']['output'];
-  points: Scalars['BigDecimal']['output'];
-  temps: Scalars['BigDecimal']['output'];
+  points: Scalars['Int']['output'];
+  temps: Scalars['Int']['output'];
 };
 
 export type CoureurPointResults = {
@@ -96,8 +95,8 @@ export type EquipePoint = {
   __typename?: 'EquipePoint';
   equipe: Scalars['UUID']['output'];
   nom: Scalars['String']['output'];
-  points: Scalars['BigDecimal']['output'];
-  temps: Scalars['BigDecimal']['output'];
+  points: Scalars['Int']['output'];
+  temps: Scalars['Int']['output'];
 };
 
 export type EquipePointResults = {
@@ -145,5 +144,5 @@ export type VequipeCoureur = {
   idEquipeCoureur: Scalars['UUID']['output'];
   nomCoureur: Scalars['String']['output'];
   nomEquipe: Scalars['String']['output'];
-  points?: Maybe<Scalars['BigDecimal']['output']>;
+  points?: Maybe<Scalars['Int']['output']>;
 };
