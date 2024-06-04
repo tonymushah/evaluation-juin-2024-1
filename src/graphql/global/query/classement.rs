@@ -41,7 +41,7 @@ impl ClassementQueries {
         &self,
         ctx: &Context<'_>,
         ordre: Option<GraphQLOrdering>,
-        pagination: OffsetLimit,
+        #[graphql(default)] pagination: OffsetLimit,
     ) -> crate::Result<ResultsData<CoueurPoint>> {
         let ordre = ordre.unwrap_or(GraphQLOrdering::Descending);
         ctx.use_pool(move |mut pool| {
