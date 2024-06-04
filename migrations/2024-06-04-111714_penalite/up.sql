@@ -5,3 +5,10 @@ CREATE TABLE penalite (
 	equipe UUID NOT NULL REFERENCES equipe(id_equipe),
 	valeur INT NOT NULL
 );
+
+CREATE VIEW V_PENALITE as 
+SELECT 
+	etape,
+	equipe,
+	SUM(valeur) as valeur
+FROM penalite GROUP BY etape, equipe;
