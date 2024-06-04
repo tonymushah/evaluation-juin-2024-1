@@ -7,6 +7,7 @@ pub mod equipe;
 pub mod equipe_coureur;
 pub mod equipe_point;
 pub mod etape;
+pub mod penalite;
 pub mod points;
 pub mod temps_coureur;
 
