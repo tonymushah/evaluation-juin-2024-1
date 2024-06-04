@@ -19,6 +19,7 @@ type AdminQueries {
 	hello: String!
 	etape: EtapeQueries!
 	penalite: PenalitesQueries!
+	equipe: EquipeQueries!
 }
 
 scalar BigDecimal
@@ -46,6 +47,17 @@ type Equipe {
 	idEquipe: UUID!
 	pseudo: String!
 	nom: String!
+}
+
+type EquipeQueries {
+	list(pagination: OffsetLimit!): EquipeResults!
+}
+
+type EquipeResults {
+	data: [Equipe!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
 }
 
 type Etape {

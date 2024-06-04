@@ -70,6 +70,7 @@ export type AdminEtapeResults = {
 
 export type AdminQueries = {
   __typename?: 'AdminQueries';
+  equipe: EquipeQueries;
   etape: EtapeQueries;
   hello: Scalars['String']['output'];
   penalite: PenalitesQueries;
@@ -88,6 +89,24 @@ export type Equipe = {
   idEquipe: Scalars['UUID']['output'];
   nom: Scalars['String']['output'];
   pseudo: Scalars['String']['output'];
+};
+
+export type EquipeQueries = {
+  __typename?: 'EquipeQueries';
+  list: EquipeResults;
+};
+
+
+export type EquipeQueriesListArgs = {
+  pagination: OffsetLimit;
+};
+
+export type EquipeResults = {
+  __typename?: 'EquipeResults';
+  data: Array<Equipe>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
 };
 
 export type Etape = {
