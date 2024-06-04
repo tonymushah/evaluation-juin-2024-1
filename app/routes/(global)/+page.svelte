@@ -8,14 +8,16 @@
 	} from '$lib/global/componnents/classement/equipe/TableClassmmentEquipe.svelte';
 	import { readable } from 'svelte/store';
 	import { brand } from '$lib';
+	import type { PageServerData } from './$types';
+	import { Client, cacheExchange, fetchExchange, setContextClient } from '@urql/svelte';
 
-	const coueur = readable<CGeneItem[]>([
-		{
-			coureur: 'Tony',
-			points: 100
-		}
-	]);
-	const equipes = readable<CEqupeItem[]>([]);
+	export let data: PageServerData;
+	setContextClient(
+		new Client({
+			url: data.client_url,
+			exchanges: [fetchExchange, cacheExchange]
+		})
+	);
 </script>
 
 <h2 class="text-2xl font-bold underline">Classements global</h2>
@@ -26,7 +28,7 @@
 
 <Tabs class="mt-2">
 	<TabItem open title="Par Coureur">
-		<Generale classement={coueur} />
+		<Generale />
 	</TabItem>
 	<TabItem title="Par Equipe">
 		<Equipes />

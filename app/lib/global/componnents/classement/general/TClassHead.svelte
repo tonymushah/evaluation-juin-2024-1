@@ -5,4 +5,5 @@
 <TableHead>
 	<TableHeadCell>Coureur</TableHeadCell>
 	<TableHeadCell>Point</TableHeadCell>
+	<TableHeadCell>Temps Total</TableHeadCell>
 </TableHead>

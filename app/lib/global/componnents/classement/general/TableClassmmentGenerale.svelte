@@ -6,19 +6,33 @@
 </script>
 
 <script lang="ts">
-	import { Table, TableBody } from 'flowbite-svelte';
+	import { Button, Table, TableBody } from 'flowbite-svelte';
 	import TClassHead from './TClassHead.svelte';
 	import TClassRow from './TClassRow.svelte';
 	import { readable, type Readable } from 'svelte/store';
+	import getClassement from './query';
 
-	export let classement: Readable<Array<ClassementItem>> = readable([]);
+	const { data, hasNext, isLoading, obs, reset } = getClassement();
+	let toObserve: HTMLElement | undefined = undefined;
+	$: {
+		if (toObserve) {
+			obs.observe(toObserve);
+		}
+	}
 </script>
 
+{#if $isLoading}
+	<h3>Loading...</h3>
+{/if}
+<Button disabled={$isLoading} on:click={reset}>Reset</Button>
 <Table>
 	<TClassHead />
 	<TableBody tableBodyClass="divide-y divide-x">
-		{#each $classement as class_ (class_.coureur)}
-			<TClassRow {...class_} />
+		{#each $data as class_}
+			<TClassRow coureur={class_.coureur.toFixed()} points={class_.points} temps={class_.temps} />
 		{/each}
+		{#if $hasNext && !$isLoading}
+			<div bind:this={toObserve} />
+		{/if}
 	</TableBody>
 </Table>

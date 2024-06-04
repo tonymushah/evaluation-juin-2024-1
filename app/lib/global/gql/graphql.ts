@@ -1,4 +1,5 @@
 /* eslint-disable */
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -146,3 +147,14 @@ export type VequipeCoureur = {
   nomEquipe: Scalars['String']['output'];
   points?: Maybe<Scalars['Int']['output']>;
 };
+
+export type ClassementGeneraleQueryVariables = Exact<{
+  ordre?: InputMaybe<GraphQlOrdering>;
+  pagination?: InputMaybe<OffsetLimit>;
+}>;
+
+
+export type ClassementGeneraleQuery = { __typename?: 'GlobalQueries', classements: { __typename?: 'ClassementQueries', parCoureur: { __typename?: 'CoureurPointResults', limit: number, offset: number, total: number, data: Array<{ __typename?: 'CoueurPoint', coureur: number, temps: number, points: number }> } } };
+
+
+export const ClassementGeneraleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"classementGenerale"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ordre"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"GraphQLOrdering"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OffsetLimit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"parCoureur"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"ordre"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ordre"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"coureur"}},{"kind":"Field","name":{"kind":"Name","value":"temps"}},{"kind":"Field","name":{"kind":"Name","value":"points"}}]}},{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"offset"}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]}}]} as unknown as DocumentNode<ClassementGeneraleQuery, ClassementGeneraleQueryVariables>;
