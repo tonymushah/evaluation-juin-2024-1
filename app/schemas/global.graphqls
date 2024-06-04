@@ -1,11 +1,81 @@
+scalar BigDecimal
+
+
+type Categorie {
+	idCategorie: UUID!
+	designation: String!
+}
+
+type CategorieResults {
+	data: [Categorie!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
+
+type ClassementQueries {
+	parEquipe(ordre: GraphQLOrdering, pagination: OffsetLimit! = {offset: 0, limit: 10}): EquipePointResults!
+	parCoureur(ordre: GraphQLOrdering, pagination: OffsetLimit!): CoureurPointResults!
+	parCategorie(ordre: GraphQLOrdering, pagination: OffsetLimit! = {offset: 0, limit: 10}, id: UUID!): CoureurPointResults!
+}
+
+type CoueurPoint {
+	coureur: Int!
+	points: BigDecimal!
+	temps: BigDecimal!
+}
+
+type CoureurPointResults {
+	data: [CoueurPoint!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
+
+type EquipePoint {
+	equipe: Int!
+	points: BigDecimal!
+	temps: BigDecimal!
+}
+
+type EquipePointResults {
+	data: [EquipePoint!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
 
 
 type GlobalQueries {
 	hello: String!
+	classements: ClassementQueries!
+	categories(pagination: OffsetLimit!): CategorieResults!
+}
+
+enum GraphQLOrdering {
+	ASCENDING
+	DESCENDING
 }
 
 
 
+input OffsetLimit {
+	offset: Int!
+	limit: Int!
+}
+
+
+"""
+A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
+Strings within GraphQL. UUIDs are used to assign unique identifiers to
+entities without requiring a central allocating authority.
+
+# References
+
+* [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)
+* [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
+"""
+scalar UUID
 
 directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT

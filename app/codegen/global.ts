@@ -7,8 +7,8 @@ const config: CodegenConfig = {
 	documents: [
 		`app/lib/${BASE}/**/*.svelte`,
 		`app/lib/${BASE}/**/*.ts`,
-		`app/routes/${BASE}/**/*.svelte`,
-		`app/routes/${BASE}/**/*.ts`
+		`app/routes/(${BASE})/**/*.svelte`,
+		`app/routes/(${BASE})/**/*.ts`
 	],
 	ignoreNoDocuments: true, // for better experience with the watcher
 	generates: {

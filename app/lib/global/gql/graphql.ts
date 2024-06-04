@@ -13,9 +13,108 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  BigDecimal: { input: any; output: any; }
+  /**
+   * A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
+   * Strings within GraphQL. UUIDs are used to assign unique identifiers to
+   * entities without requiring a central allocating authority.
+   *
+   * # References
+   *
+   * * [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)
+   * * [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
+   */
+  UUID: { input: any; output: any; }
+};
+
+export type Categorie = {
+  __typename?: 'Categorie';
+  designation: Scalars['String']['output'];
+  idCategorie: Scalars['UUID']['output'];
+};
+
+export type CategorieResults = {
+  __typename?: 'CategorieResults';
+  data: Array<Categorie>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
+export type ClassementQueries = {
+  __typename?: 'ClassementQueries';
+  parCategorie: CoureurPointResults;
+  parCoureur: CoureurPointResults;
+  parEquipe: EquipePointResults;
+};
+
+
+export type ClassementQueriesParCategorieArgs = {
+  id: Scalars['UUID']['input'];
+  ordre?: InputMaybe<GraphQlOrdering>;
+  pagination?: OffsetLimit;
+};
+
+
+export type ClassementQueriesParCoureurArgs = {
+  ordre?: InputMaybe<GraphQlOrdering>;
+  pagination: OffsetLimit;
+};
+
+
+export type ClassementQueriesParEquipeArgs = {
+  ordre?: InputMaybe<GraphQlOrdering>;
+  pagination?: OffsetLimit;
+};
+
+export type CoueurPoint = {
+  __typename?: 'CoueurPoint';
+  coureur: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  temps: Scalars['BigDecimal']['output'];
+};
+
+export type CoureurPointResults = {
+  __typename?: 'CoureurPointResults';
+  data: Array<CoueurPoint>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
+export type EquipePoint = {
+  __typename?: 'EquipePoint';
+  equipe: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  temps: Scalars['BigDecimal']['output'];
+};
+
+export type EquipePointResults = {
+  __typename?: 'EquipePointResults';
+  data: Array<EquipePoint>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
 };
 
 export type GlobalQueries = {
   __typename?: 'GlobalQueries';
+  categories: CategorieResults;
+  classements: ClassementQueries;
   hello: Scalars['String']['output'];
+};
+
+
+export type GlobalQueriesCategoriesArgs = {
+  pagination: OffsetLimit;
+};
+
+export enum GraphQlOrdering {
+  Ascending = 'ASCENDING',
+  Descending = 'DESCENDING'
+}
+
+export type OffsetLimit = {
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
 };
