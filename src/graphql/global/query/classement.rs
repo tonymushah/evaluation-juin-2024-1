@@ -31,6 +31,7 @@ impl ClassementQueries {
                     .to_results_data(&mut pool)?,
                 GraphQLOrdering::Descending => v_equipe_point
                     .select(EquipePoint::as_select())
+                    .order(points.desc())
                     .paginate_with_param(pagination)
                     .to_results_data(&mut pool)?,
             })
