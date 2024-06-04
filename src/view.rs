@@ -49,7 +49,7 @@ diesel::table! {
 
 diesel::table! {
     v_equipe_point(equipe) {
-        equipe -> Int4,
+        equipe -> Uuid,
         points -> Numeric,
         temps -> Numeric
     }
@@ -66,7 +66,7 @@ diesel::table! {
 
 diesel::table! {
     v_equipe_point_etape(equipe, etape) {
-        equipe -> Int4,
+        equipe -> Uuid,
         points -> Numeric,
         temps -> Numeric,
         etape -> Int4

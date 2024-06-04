@@ -7,7 +7,7 @@ use self::classement::ClassementQueries;
 
 use crate::{
     graphql::{GetPoolConnection, OffsetLimit, ResultsData},
-    models::{categorie::Categorie, Paginate},
+    models::{categorie::Categorie, equipe_coureur::VEquipeCoureur, Paginate},
 };
 
 #[derive(Debug, Clone, Copy, Default)]
@@ -34,5 +34,13 @@ impl GlobalQueries {
                 .to_results_data(&mut pool)?)
         })
         .await
+    }
+    pub async fn get_coureur(
+        &self,
+        ctx: &Context<'_>,
+        coureur_: i32,
+    ) -> crate::Result<VEquipeCoureur> {
+        ctx.use_pool(move |mut pool| Ok(VEquipeCoureur::by_coureur(coureur_, &mut pool)?))
+            .await
     }
 }
