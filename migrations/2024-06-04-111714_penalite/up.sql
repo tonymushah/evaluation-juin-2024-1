@@ -10,5 +10,5 @@ CREATE VIEW V_PENALITE as
 SELECT 
 	etape,
 	equipe,
-	SUM(valeur) as valeur
+	cast(SUM(valeur) as int) as valeur
 FROM penalite GROUP BY etape, equipe;
