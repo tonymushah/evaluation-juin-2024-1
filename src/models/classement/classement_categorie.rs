@@ -1,5 +1,4 @@
 use async_graphql::SimpleObject;
-use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use uuid::Uuid;
 
@@ -14,8 +13,8 @@ use crate::{models::coureur_point::CoueurPoint, view::v_classement_categorie};
 pub struct ClassementCategorie {
     pub coureur: i32,
     pub categorie: Uuid,
-    pub points: BigDecimal,
-    pub temps: BigDecimal,
+    pub points: i64,
+    pub temps: i64,
 }
 
 impl From<ClassementCategorie> for CoueurPoint {

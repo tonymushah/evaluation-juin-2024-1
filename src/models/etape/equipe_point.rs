@@ -1,5 +1,4 @@
 use async_graphql::SimpleObject;
-use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use uuid::Uuid;
 
@@ -13,7 +12,7 @@ use crate::view::v_equipe_point_etape;
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct EquipePointEtape {
     pub equipe: Uuid,
-    pub points: BigDecimal,
-    pub temps: BigDecimal,
+    pub points: i64,
+    pub temps: i64,
     pub etape: i32,
 }

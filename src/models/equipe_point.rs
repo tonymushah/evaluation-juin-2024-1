@@ -1,5 +1,4 @@
 use async_graphql::{ComplexObject, Context, SimpleObject};
-use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use uuid::Uuid;
 
@@ -14,8 +13,8 @@ use crate::{graphql::GetPoolConnection, view::v_equipe_point};
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct EquipePoint {
     pub equipe: Uuid,
-    pub points: BigDecimal,
-    pub temps: BigDecimal,
+    pub points: i64,
+    pub temps: i64,
 }
 
 #[ComplexObject]

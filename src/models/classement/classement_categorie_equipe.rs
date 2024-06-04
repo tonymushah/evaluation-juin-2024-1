@@ -1,5 +1,4 @@
 use async_graphql::SimpleObject;
-use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use uuid::Uuid;
 
@@ -15,8 +14,8 @@ pub struct ClassementCategorieEquipe {
     pub coureur: i32,
     pub categorie: Uuid,
     pub equipe: Uuid,
-    pub points: BigDecimal,
-    pub temps: BigDecimal,
+    pub points: i64,
+    pub temps: i64,
 }
 
 impl From<ClassementCategorieEquipe> for CoueurPoint {

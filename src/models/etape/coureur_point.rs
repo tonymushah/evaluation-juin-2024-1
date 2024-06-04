@@ -1,5 +1,4 @@
 use async_graphql::SimpleObject;
-use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 
 use crate::view::v_coureur_point_etape;
@@ -12,7 +11,7 @@ use crate::view::v_coureur_point_etape;
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CoueurPointEtape {
     pub coureur: i32,
-    pub points: BigDecimal,
-    pub temps: BigDecimal,
+    pub points: i64,
+    pub temps: i64,
     pub etape: i32,
 }

@@ -1,5 +1,4 @@
 use async_graphql::{ComplexObject, Context, InputObject, SimpleObject};
-use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use time::Date;
 use uuid::Uuid;
@@ -63,14 +62,14 @@ impl VEquipeCoureur {
 
 #[ComplexObject]
 impl VEquipeCoureur {
-    pub async fn points(&self, ctx: &Context<'_>) -> crate::Result<Option<BigDecimal>> {
+    pub async fn points(&self, ctx: &Context<'_>) -> crate::Result<Option<i64>> {
         let dosard = self.coureur;
         ctx.use_pool(move |mut pool| {
             use crate::view::v_coureur_point::dsl::*;
             Ok(v_coureur_point
                 .select(points)
                 .filter(coureur.eq(dosard))
-                .get_result::<BigDecimal>(&mut pool)
+                .get_result::<i64>(&mut pool)
                 .ok())
         })
         .await
