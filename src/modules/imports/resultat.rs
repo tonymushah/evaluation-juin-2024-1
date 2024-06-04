@@ -114,14 +114,17 @@ impl ResultatCSV {
             }
         }
     }
-    fn get_temps(&self, con: &mut PgConnection) -> QueryResult<i32> {
+    pub fn get_etape_depart(&self, con: &mut PgConnection) -> QueryResult<PrimitiveDateTime> {
         use crate::schema::etape::dsl::*;
-        let depart_: PrimitiveDateTime = etape
+        etape
             .select(depart)
             .filter(rang.eq(self.etape_rang))
-            .get_result(con)?;
-        let ar = self.arrivee - depart_;
-        Ok(ar.as_seconds_f64().ceil() as i32)
+            .get_result(con)
+    }
+    pub fn get_temps(&self, con: &mut PgConnection) -> QueryResult<i32> {
+        let depart = self.get_etape_depart(con)?;
+        let ar = self.arrivee - depart;
+        Ok(ar.as_seconds_f64() as i32)
     }
     pub fn insert(&self, con: &mut PgConnection) -> QueryResult<TempCoureur> {
         let input = TempCoureur {
