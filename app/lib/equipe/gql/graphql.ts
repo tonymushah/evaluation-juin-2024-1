@@ -13,9 +13,178 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  BigDecimal: { input: any; output: any; }
+  /**
+   * ISO 8601 calendar date without timezone.
+   * Format: %Y-%m-%d
+   *
+   * # Examples
+   *
+   * * `1994-11-13`
+   * * `2000-02-24`
+   */
+  Date: { input: any; output: any; }
+  /**
+   * A local datetime without timezone offset.
+   *
+   * The input/output is a string in ISO 8601 format without timezone, including
+   * subseconds. E.g. "2022-01-12T07:30:19.12345".
+   */
+  LocalDateTime: { input: any; output: any; }
+  /**
+   * A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
+   * Strings within GraphQL. UUIDs are used to assign unique identifiers to
+   * entities without requiring a central allocating authority.
+   *
+   * # References
+   *
+   * * [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)
+   * * [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
+   */
+  UUID: { input: any; output: any; }
+};
+
+export type CoueurPoint = {
+  __typename?: 'CoueurPoint';
+  coureur: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  temps: Scalars['BigDecimal']['output'];
+};
+
+export type CoureurPointResults = {
+  __typename?: 'CoureurPointResults';
+  data: Array<CoueurPoint>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
+export type EquipeMutations = {
+  __typename?: 'EquipeMutations';
+  ajouterJoueurToEtape: TempCoureur;
+  login: Scalars['String']['output'];
+  removeJoueurToEtape: TempCoureur;
+};
+
+
+export type EquipeMutationsAjouterJoueurToEtapeArgs = {
+  etape: Scalars['Int']['input'];
+  joueur: Scalars['Int']['input'];
+};
+
+
+export type EquipeMutationsLoginArgs = {
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
+
+
+export type EquipeMutationsRemoveJoueurToEtapeArgs = {
+  etape: Scalars['Int']['input'];
+  joueur: Scalars['Int']['input'];
 };
 
 export type EquipeQueries = {
   __typename?: 'EquipeQueries';
+  classementParCategorie: CoureurPointResults;
+  coureur: VequipeCoureur;
+  etape: EtapeQueries;
   hello: Scalars['String']['output'];
+  listCoureur: VEquipeCoureurResults;
+};
+
+
+export type EquipeQueriesClassementParCategorieArgs = {
+  categorie: Scalars['UUID']['input'];
+  ordre?: InputMaybe<GraphQlOrdering>;
+  pagination?: OffsetLimit;
+};
+
+
+export type EquipeQueriesCoureurArgs = {
+  dosard: Scalars['Int']['input'];
+};
+
+
+export type EquipeQueriesListCoureurArgs = {
+  pagination: OffsetLimit;
+};
+
+export type Etape = {
+  __typename?: 'Etape';
+  depart: Scalars['LocalDateTime']['output'];
+  finished?: Maybe<Scalars['LocalDateTime']['output']>;
+  longueur: Scalars['BigDecimal']['output'];
+  nbCoureurParEquipe: Scalars['Int']['output'];
+  nom: Scalars['String']['output'];
+  rang: Scalars['Int']['output'];
+};
+
+export type EtapeQueries = {
+  __typename?: 'EtapeQueries';
+  joueurs: Array<VequipeCoureur>;
+  list: EtapeResults;
+  unique: Etape;
+};
+
+
+export type EtapeQueriesJoueursArgs = {
+  etape: Scalars['Int']['input'];
+};
+
+
+export type EtapeQueriesListArgs = {
+  pagination: OffsetLimit;
+};
+
+
+export type EtapeQueriesUniqueArgs = {
+  rang: Scalars['Int']['input'];
+};
+
+export type EtapeResults = {
+  __typename?: 'EtapeResults';
+  data: Array<Etape>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
+export enum GraphQlOrdering {
+  Ascending = 'ASCENDING',
+  Descending = 'DESCENDING'
+}
+
+export type OffsetLimit = {
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+};
+
+export type TempCoureur = {
+  __typename?: 'TempCoureur';
+  equipeCoureur: Scalars['UUID']['output'];
+  etape: Scalars['Int']['output'];
+  idTempsCoureur: Scalars['UUID']['output'];
+  points?: Maybe<Scalars['Int']['output']>;
+  temps?: Maybe<Scalars['Int']['output']>;
+};
+
+export type VEquipeCoureurResults = {
+  __typename?: 'VEquipeCoureurResults';
+  data: Array<VequipeCoureur>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+};
+
+export type VequipeCoureur = {
+  __typename?: 'VequipeCoureur';
+  coureur: Scalars['Int']['output'];
+  dtn: Scalars['Date']['output'];
+  equipe: Scalars['UUID']['output'];
+  genre: Scalars['Int']['output'];
+  idEquipeCoureur: Scalars['UUID']['output'];
+  nomCoureur: Scalars['String']['output'];
+  nomEquipe: Scalars['String']['output'];
+  points?: Maybe<Scalars['BigDecimal']['output']>;
 };

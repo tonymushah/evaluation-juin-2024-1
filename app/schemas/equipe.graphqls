@@ -1,14 +1,129 @@
+scalar BigDecimal
+
+
+type CoueurPoint {
+	coureur: Int!
+	points: BigDecimal!
+	temps: BigDecimal!
+}
+
+type CoureurPointResults {
+	data: [CoueurPoint!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
+
+"""
+ISO 8601 calendar date without timezone.
+Format: %Y-%m-%d
+
+# Examples
+
+* `1994-11-13`
+* `2000-02-24`
+"""
+scalar Date
+
+type EquipeMutations {
+	login(username: String!, password: String!): String!
+	ajouterJoueurToEtape(etape: Int!, joueur: Int!): TempCoureur!
+	removeJoueurToEtape(etape: Int!, joueur: Int!): TempCoureur!
+}
 
 type EquipeQueries {
 	hello: String!
+	etape: EtapeQueries!
+	listCoureur(pagination: OffsetLimit!): VEquipeCoureurResults!
+	coureur(dosard: Int!): VequipeCoureur!
+	classementParCategorie(ordre: GraphQLOrdering, pagination: OffsetLimit! = {offset: 0, limit: 10}, categorie: UUID!): CoureurPointResults!
+}
+
+type Etape {
+	rang: Int!
+	longueur: BigDecimal!
+	nom: String!
+	nbCoureurParEquipe: Int!
+	depart: LocalDateTime!
+	finished: LocalDateTime
+}
+
+type EtapeQueries {
+	list(pagination: OffsetLimit!): EtapeResults!
+	unique(rang: Int!): Etape!
+	joueurs(etape: Int!): [VequipeCoureur!]!
+}
+
+type EtapeResults {
+	data: [Etape!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
+
+
+enum GraphQLOrdering {
+	ASCENDING
+	DESCENDING
 }
 
 
 
+"""
+A local datetime without timezone offset.
 
+The input/output is a string in ISO 8601 format without timezone, including
+subseconds. E.g. "2022-01-12T07:30:19.12345".
+"""
+scalar LocalDateTime
+
+input OffsetLimit {
+	offset: Int!
+	limit: Int!
+}
+
+
+type TempCoureur {
+	idTempsCoureur: UUID!
+	temps: Int
+	points: Int
+	equipeCoureur: UUID!
+	etape: Int!
+}
+
+"""
+A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
+Strings within GraphQL. UUIDs are used to assign unique identifiers to
+entities without requiring a central allocating authority.
+
+# References
+
+* [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)
+* [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
+"""
+scalar UUID
+
+type VEquipeCoureurResults {
+	data: [VequipeCoureur!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
+
+type VequipeCoureur {
+	coureur: Int!
+	equipe: UUID!
+	nomCoureur: String!
+	genre: Int!
+	dtn: Date!
+	nomEquipe: String!
+	idEquipeCoureur: UUID!
+	points: BigDecimal
+}
 
 directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 schema {
 	query: EquipeQueries
+	mutation: EquipeMutations
 }
