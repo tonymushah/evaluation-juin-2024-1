@@ -3,7 +3,7 @@ use bigdecimal::BigDecimal;
 use diesel::prelude::*;
 use uuid::Uuid;
 
-use crate::view::v_classement_categories_equipe;
+use crate::{models::coureur_point::CoueurPoint, view::v_classement_categories_equipe};
 
 #[derive(
     Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Identifiable, Selectable, Queryable, SimpleObject,
@@ -17,4 +17,14 @@ pub struct ClassementCategorieEquipe {
     pub equipe: Uuid,
     pub points: BigDecimal,
     pub temps: BigDecimal,
+}
+
+impl From<ClassementCategorieEquipe> for CoueurPoint {
+    fn from(value: ClassementCategorieEquipe) -> Self {
+        Self {
+            coureur: value.coureur,
+            points: value.points,
+            temps: value.temps,
+        }
+    }
 }
