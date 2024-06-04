@@ -14,3 +14,4 @@ vite.config.ts.timestamp-*
 
 /target
 .~lock.Timesheet-evaluation.xlsx#
+/logs

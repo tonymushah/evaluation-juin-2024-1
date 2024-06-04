@@ -131,6 +131,7 @@ impl ResultatCSV {
             temps: Some(self.get_temps(con)?),
             points: None,
         };
+        //println!("{:#?}", input);
         con.transaction(move |con| {
             use crate::schema::temps_coureur::dsl::*;
             insert_into(temps_coureur).values(&input).execute(con)?;

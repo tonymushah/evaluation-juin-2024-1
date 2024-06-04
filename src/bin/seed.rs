@@ -6,7 +6,7 @@ use backend::{
     etablish_connection,
     models::{etape::Etape, points::Points},
     modules::{
-        add_point_joueur::AddPointJoueurModule,
+        add_point_joueur::attribute_points_to_etapes,
         imports::{etape::EtapeCSVDATA, points::PointsCSVData, resultat::ResultatCSV},
     },
     reset::reset_db,
@@ -57,12 +57,18 @@ fn seed_resultats(pool: &mut PgConnection) -> anyhow::Result<()> {
         "data/données importation juin 2024 - resultat.csv",
     )?);
     let data = ResultatCSV::read(Reader::from_reader(buf_read));
+    let data_len = data.len();
     let mut etapes = data.iter().map(|r| r.etape_rang).collect::<Vec<_>>();
     etapes.dedup();
+
     for res in data {
+        //println!("{:#?}", res);
         res.insert(pool)?;
     }
-    AddPointJoueurModule::attribute_points_to_etapes(pool, &etapes)?;
+    let res_ = attribute_points_to_etapes(pool, &etapes)?;
+    if res_.len() != data_len {
+        println!("Not same")
+    }
     Ok(())
 }
 

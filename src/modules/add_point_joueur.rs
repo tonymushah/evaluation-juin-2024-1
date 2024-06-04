@@ -56,65 +56,59 @@ impl<'a> AddPointJoueurModule<'a> {
         if entry.point.is_some() {
             temp.points = entry.point;
         };
-        self.con
+
+        let tmp = self
+            .con
             .build_transaction()
             .run::<TempCoureur, diesel::result::Error, _>(move |con| {
-                diesel::update(temps_coureur).set(&temp).execute(con)?;
-                temp.attribute_points(con)?;
-                Ok(temp)
-            })
+                diesel::update(temps_coureur)
+                    .set(&temp)
+                    .returning(TempCoureur::as_returning())
+                    .get_result(con)
+            })?;
+        self.attribute_points()?
+            .into_iter()
+            .find(|t| t.id_temps_coureur == tmp.id_temps_coureur)
+            .ok_or(diesel::result::Error::NotFound)
     }
-    pub fn attribute_points(&mut self) -> QueryResult<()> {
+    pub fn attribute_points(&mut self) -> QueryResult<Vec<TempCoureur>> {
         use crate::schema::temps_coureur::dsl::*;
 
-        for mut t in temps_coureur
+        Ok(temps_coureur
             .select(TempCoureur::as_select())
             .filter(etape.eq(self.etape))
-            .get_results(self.con)?
-        {
-            if let Err(e) = t.attribute_points(self.con) {
-                eprintln!("er-- {e}");
-            }
-        }
-        Ok(())
-    }
-    pub fn attribute_points_to_etapes(con: &mut PgConnection, etapes: &[i32]) -> QueryResult<()> {
-        for etape in etapes {
-            AddPointJoueurModule::new(*etape, con).attribute_points()?;
-        }
-        Ok(())
+            .get_results::<TempCoureur>(self.con)?
+            .into_iter()
+            .flat_map(|tm| tm.attribute_points(self.con))
+            .collect())
     }
 }
 
+pub fn attribute_points_to_etapes(
+    con: &mut PgConnection,
+    etapes: &[i32],
+) -> QueryResult<Vec<TempCoureur>> {
+    let mut tmp: Vec<TempCoureur> = Vec::new();
+    for etape in etapes {
+        tmp.append(&mut AddPointJoueurModule::new(*etape, con).attribute_points()?);
+    }
+    Ok(tmp)
+}
+
 impl TempCoureur {
-    pub fn attribute_points(&mut self, con: &mut PgConnection) -> QueryResult<()> {
-        let entry = RangEntry::get_rang_from_etape(con, self.etape)
-            .map_err(|err| {
-                eprintln!("renge - {err}");
-                err
-            })?
+    pub fn attribute_points(self, con: &mut PgConnection) -> QueryResult<Self> {
+        let entrys = RangEntry::get_rang_from_etape(con, self.etape)?;
+        let entry = entrys
             .into_iter()
-            .find(|e| e.equipe_coureur == self.equipe_coureur)
+            .find(|e| e.equipe_coureur == self.equipe_coureur && e.etape == self.etape)
             .ok_or(diesel::result::Error::NotFound)?;
-        let point: i32 = {
-            use crate::schema::points::dsl::*;
-            points
-                .select(valeur)
-                .filter(rang.eq(entry.rang as i32))
+        {
+            use crate::schema::temps_coureur::dsl::*;
+            diesel::update(temps_coureur)
+                .set(points.eq(Some(entry.points.unwrap_or_default())))
+                .filter(id_temps_coureur.eq(self.id_temps_coureur))
+                .returning(Self::as_returning())
                 .get_result(con)
-                .unwrap_or_default()
-        };
-        let old_points = self.points;
-        if old_points.is_none() {
-            self.points = Some(point);
-            {
-                use crate::schema::temps_coureur::dsl::*;
-                if let Err(e) = diesel::update(temps_coureur).set(&*self).execute(con) {
-                    self.points = old_points;
-                    return Err(e);
-                }
-            }
         }
-        Ok(())
     }
 }
