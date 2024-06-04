@@ -1,14 +1,15 @@
 import { get_paginated_init_data, type PaginatedData } from '$lib';
 import { graphql } from '$lib/global/gql';
-import type { CoueurPoint, GraphQlOrdering } from '$lib/global/gql/graphql';
+import type { EquipePoint, GraphQlOrdering } from '$lib/global/gql/graphql';
 import { readonly, type Readable } from 'svelte/store';
 
 const query = graphql(`
-	query classementGenerale($ordre: GraphQLOrdering, $pagination: OffsetLimit) {
+	query classementEquipeGenerale($ordre: GraphQLOrdering = DESCENDING, $pagination: OffsetLimit) {
 		classements {
-			parCoureur(ordre: $ordre, pagination: $pagination) {
+			parEquipe(ordre: $ordre, pagination: $pagination) {
 				data {
-					coureur
+					equipe
+					nom
 					temps
 					points
 				}
@@ -20,10 +21,10 @@ const query = graphql(`
 	}
 `);
 
-type ClassementGlobal = PaginatedData<CoueurPoint>;
+type ClassementGlobal = PaginatedData<EquipePoint>;
 
 export default function getClassement(ordre?: Readable<GraphQlOrdering>): ClassementGlobal {
-	const { client, data, isLoading, hasNext, error } = get_paginated_init_data<CoueurPoint>();
+	const { client, data, isLoading, hasNext, error } = get_paginated_init_data<EquipePoint>();
 	let offset = 0;
 	let limit = 10;
 	async function next() {
@@ -33,9 +34,12 @@ export default function getClassement(ordre?: Readable<GraphQlOrdering>): Classe
 				pagination: { offset, limit }
 			})
 			.toPromise()
-			.finally(() => isLoading.set(false));
+			.catch((e) => {
+				isLoading.set(false);
+				return e;
+			});
 		if (res.data) {
-			const resu = res.data.classements.parCoureur;
+			const resu = res.data.classements.parEquipe;
 			data.update((a) => {
 				a.push(...resu.data);
 				return a;
@@ -49,8 +53,15 @@ export default function getClassement(ordre?: Readable<GraphQlOrdering>): Classe
 		} else if (res.error) {
 			error.set(res.error);
 		}
+		isLoading.set(false);
 	}
-	const obs = new IntersectionObserver(next);
+	const obs = new IntersectionObserver(() => {
+		return isLoading.subscribe((is) => {
+			if (!is) {
+				next();
+			}
+		});
+	});
 	return {
 		data: readonly(data),
 		isLoading: readonly(isLoading),

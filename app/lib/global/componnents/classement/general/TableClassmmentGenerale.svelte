@@ -9,16 +9,13 @@
 	import { Button, Table, TableBody } from 'flowbite-svelte';
 	import TClassHead from './TClassHead.svelte';
 	import TClassRow from './TClassRow.svelte';
-	import { readable, type Readable } from 'svelte/store';
 	import getClassement from './query';
+	import { onMount } from 'svelte';
 
-	const { data, hasNext, isLoading, obs, reset } = getClassement();
-	let toObserve: HTMLElement | undefined = undefined;
-	$: {
-		if (toObserve) {
-			obs.observe(toObserve);
-		}
-	}
+	const { data, hasNext, isLoading, obs, reset, next } = getClassement();
+	onMount(async () => {
+		await reset();
+	});
 </script>
 
 {#if $isLoading}
@@ -31,8 +28,15 @@
 		{#each $data as class_}
 			<TClassRow coureur={class_.coureur.toFixed()} points={class_.points} temps={class_.temps} />
 		{/each}
-		{#if $hasNext && !$isLoading}
-			<div bind:this={toObserve} />
-		{/if}
 	</TableBody>
 </Table>
+{#if $hasNext && !$isLoading}
+	<div class="flex w-full items-center justify-center">
+		<Button
+			disabled={$isLoading}
+			on:click={async () => {
+				await next();
+			}}>Next</Button
+		>
+	</div>
+{/if}

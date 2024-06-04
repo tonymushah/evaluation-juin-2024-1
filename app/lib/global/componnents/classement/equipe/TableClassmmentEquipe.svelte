@@ -1,23 +1,38 @@
-<script lang="ts" context="module">
-	export type ClassementItem = {
-		equipe: string;
-		points: number;
-	};
-</script>
-
 <script lang="ts">
-	import { Table, TableBody } from 'flowbite-svelte';
+	import { Button, Table, TableBody } from 'flowbite-svelte';
 	import TClassHead from './TClassHead.svelte';
 	import TClassRow from './TClassRow.svelte';
-	import { readable, type Readable } from 'svelte/store';
-	export let classement: Readable<Array<ClassementItem>> = readable([]);
+	import getClassement from './query';
+	import { onMount } from 'svelte';
+
+	const { data, hasNext, isLoading, reset, next } = getClassement();
+	onMount(async () => {
+		await reset();
+	});
 </script>
+
+{#if $isLoading}
+	<h3>Loading...</h3>
+{/if}
+
+<Button disabled={$isLoading} on:click={reset}>Reset</Button>
 
 <Table>
 	<TClassHead />
 	<TableBody tableBodyClass="divide-y divide-x">
-		{#each $classement as class_ (class_.equipe)}
-			<TClassRow {...class_} />
+		{#each $data as class_}
+			<TClassRow equipe={class_.nom} points={class_.points} />
 		{/each}
 	</TableBody>
 </Table>
+
+{#if $hasNext && !$isLoading}
+	<div class="flex w-full items-center justify-center">
+		<Button
+			disabled={$isLoading}
+			on:click={async () => {
+				await next();
+			}}>Next</Button
+		>
+	</div>
+{/if}
