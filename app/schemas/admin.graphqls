@@ -18,6 +18,7 @@ type AdminEtapeResults {
 type AdminQueries {
 	hello: String!
 	etape: EtapeQueries!
+	penalite: PenalitesQueries!
 }
 
 scalar BigDecimal
@@ -45,6 +46,15 @@ type Equipe {
 	idEquipe: UUID!
 	pseudo: String!
 	nom: String!
+}
+
+type Etape {
+	rang: Int!
+	longueur: BigDecimal!
+	nom: String!
+	nbCoureurParEquipe: Int!
+	depart: LocalDateTime!
+	finished: LocalDateTime
 }
 
 type EtapeCoureur {
@@ -81,6 +91,26 @@ scalar LocalDateTime
 input OffsetLimit {
 	offset: Int!
 	limit: Int!
+}
+
+type Penalite {
+	idPenalite: UUID!
+	etape: Int!
+	valeur: Int!
+	equipe: UUID!
+	equipeData: Equipe!
+	etapeData: Etape!
+}
+
+type PenalitesQueries {
+	list(pagination: OffsetLimit! = {offset: 0, limit: 10}): PenalitesResults!
+}
+
+type PenalitesResults {
+	data: [Penalite!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
 }
 
 

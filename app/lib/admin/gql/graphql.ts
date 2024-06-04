@@ -72,6 +72,7 @@ export type AdminQueries = {
   __typename?: 'AdminQueries';
   etape: EtapeQueries;
   hello: Scalars['String']['output'];
+  penalite: PenalitesQueries;
 };
 
 export type Coureur = {
@@ -87,6 +88,16 @@ export type Equipe = {
   idEquipe: Scalars['UUID']['output'];
   nom: Scalars['String']['output'];
   pseudo: Scalars['String']['output'];
+};
+
+export type Etape = {
+  __typename?: 'Etape';
+  depart: Scalars['LocalDateTime']['output'];
+  finished?: Maybe<Scalars['LocalDateTime']['output']>;
+  longueur: Scalars['BigDecimal']['output'];
+  nbCoureurParEquipe: Scalars['Int']['output'];
+  nom: Scalars['String']['output'];
+  rang: Scalars['Int']['output'];
 };
 
 export type EtapeCoureur = {
@@ -125,4 +136,32 @@ export type EtapeQueriesUniqueArgs = {
 export type OffsetLimit = {
   limit: Scalars['Int']['input'];
   offset: Scalars['Int']['input'];
+};
+
+export type Penalite = {
+  __typename?: 'Penalite';
+  equipe: Scalars['UUID']['output'];
+  equipeData: Equipe;
+  etape: Scalars['Int']['output'];
+  etapeData: Etape;
+  idPenalite: Scalars['UUID']['output'];
+  valeur: Scalars['Int']['output'];
+};
+
+export type PenalitesQueries = {
+  __typename?: 'PenalitesQueries';
+  list: PenalitesResults;
+};
+
+
+export type PenalitesQueriesListArgs = {
+  pagination?: OffsetLimit;
+};
+
+export type PenalitesResults = {
+  __typename?: 'PenalitesResults';
+  data: Array<Penalite>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
 };
