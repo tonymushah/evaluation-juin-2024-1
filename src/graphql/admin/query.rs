@@ -1,7 +1,8 @@
+pub mod equipe;
 pub mod etape;
 pub mod penalites;
 
-use self::{etape::EtapeQueries, penalites::PenalitesQueries};
+use self::{equipe::EquipeQueries, etape::EtapeQueries, penalites::PenalitesQueries};
 
 use async_graphql::Object;
 
@@ -18,5 +19,8 @@ impl AdminQueries {
     }
     pub async fn penalite(&self) -> PenalitesQueries {
         PenalitesQueries
+    }
+    pub async fn equipe(&self) -> EquipeQueries {
+        EquipeQueries
     }
 }
