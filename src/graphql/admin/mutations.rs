@@ -1,7 +1,8 @@
 pub mod etape;
 pub mod import;
+pub mod penalites;
 
-use self::{etape::EtapeMutation, import::ImportMutations};
+use self::{etape::EtapeMutation, import::ImportMutations, penalites::PenaliteMuations};
 
 use std::ops::Deref;
 
@@ -46,6 +47,9 @@ impl AdminMutations {
     pub async fn logout(&self, ctx: &Context<'_>) -> crate::Result<bool> {
         ctx.reset().await?;
         Ok(true)
+    }
+    pub async fn penalite(&self) -> PenaliteMuations {
+        PenaliteMuations
     }
 }
 
