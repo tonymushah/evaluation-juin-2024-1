@@ -42,24 +42,24 @@ diesel::table! {
 diesel::table! {
     v_coureur_point(coureur) {
         coureur -> Int4,
-        points -> Numeric,
-        temps -> Numeric
+        points -> BigInt,
+        temps -> BigInt
     }
 }
 
 diesel::table! {
     v_equipe_point(equipe) {
         equipe -> Uuid,
-        points -> Numeric,
-        temps -> Numeric
+        points -> BigInt,
+        temps -> BingInt
     }
 }
 
 diesel::table! {
     v_coureur_point_etape(coureur, etape) {
         coureur -> Int4,
-        points -> Numeric,
-        temps -> Numeric,
+        points -> BigInt,
+        temps -> BigInt,
         etape -> Int4
     }
 }
@@ -67,8 +67,8 @@ diesel::table! {
 diesel::table! {
     v_equipe_point_etape(equipe, etape) {
         equipe -> Uuid,
-        points -> Numeric,
-        temps -> Numeric,
+        points -> BigInt,
+        temps -> BigInt,
         etape -> Int4
     }
 }
@@ -109,8 +109,8 @@ diesel::table! {
     v_classement_categorie(coureur, categorie) {
         coureur -> Int4,
         categorie -> Uuid,
-        points -> Numeric,
-        temps -> Numeric
+        points -> BigInt,
+        temps -> BigInt
     }
 }
 
@@ -119,8 +119,8 @@ diesel::table! {
         coureur -> Int4,
         categorie -> Uuid,
         equipe -> Uuid,
-        points -> Numeric,
-        temps -> Numeric
+        points -> BigInt,
+        temps -> BigInt
     }
 }
 
@@ -129,7 +129,7 @@ diesel::table! {
         coureur -> Int4,
         categorie -> Uuid,
         etape -> Integer,
-        points -> Numeric,
-        temps -> Numeric
+        points -> BigInt,
+        temps -> BigInt
     }
 }
