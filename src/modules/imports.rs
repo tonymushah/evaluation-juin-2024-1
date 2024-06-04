@@ -1,5 +1,6 @@
 pub mod etape;
 pub mod points;
+pub mod resultat;
 
 use async_graphql::Enum;
 use csv::ReaderBuilder;
@@ -47,7 +48,7 @@ where
     D: Deserializer<'de>,
 {
     let s: String = Deserialize::deserialize(de)?;
-    println!("{s}");
+    // println!("{s}");
     let format =
         format_description::parse(IMPORT_DATE_TIME_FORMAT).map_err(serde::de::Error::custom)?;
 

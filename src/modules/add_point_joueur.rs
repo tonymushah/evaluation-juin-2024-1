@@ -8,11 +8,11 @@ pub use self::temps_coureur::TempsCoureur;
 use diesel::prelude::*;
 use uuid::Uuid;
 
-use crate::{models::temps_coureur::TempCoureur, DbPoolConnection};
+use crate::models::temps_coureur::TempCoureur;
 
 pub struct AddPointJoueurModule<'a> {
     etape: i32,
-    con: &'a mut DbPoolConnection,
+    con: &'a mut PgConnection,
 }
 
 #[derive(Debug, Clone)]
@@ -46,7 +46,7 @@ impl AddPointJoueurEntry {
 }
 
 impl<'a> AddPointJoueurModule<'a> {
-    pub fn new(etape: i32, con: &'a mut DbPoolConnection) -> Self {
+    pub fn new(etape: i32, con: &'a mut PgConnection) -> Self {
         Self { etape, con }
     }
     pub fn insert_entry(&mut self, entry: &AddPointJoueurEntry) -> QueryResult<TempCoureur> {
@@ -63,6 +63,24 @@ impl<'a> AddPointJoueurModule<'a> {
                 temp.attribute_points(con)?;
                 Ok(temp)
             })
+    }
+    pub fn attribute_points(&mut self) -> QueryResult<()> {
+        use crate::schema::temps_coureur::dsl::*;
+
+        for mut t in temps_coureur
+            .select(TempCoureur::as_select())
+            .filter(etape.eq(self.etape))
+            .get_results(self.con)?
+        {
+            let _ = t.attribute_points(self.con);
+        }
+        Ok(())
+    }
+    pub fn attribute_points_to_etapes(con: &mut PgConnection, etapes: &[i32]) -> QueryResult<()> {
+        for etape in etapes {
+            AddPointJoueurModule::new(*etape, con).attribute_points()?;
+        }
+        Ok(())
     }
 }
 

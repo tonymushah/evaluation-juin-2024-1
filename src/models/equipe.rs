@@ -1,4 +1,5 @@
 use async_graphql::{InputObject, SimpleObject};
+use convert_case::{Case, Casing};
 use diesel::prelude::*;
 use uuid::Uuid;
 
@@ -30,4 +31,37 @@ pub struct Equipe {
     #[graphql(skip)]
     pub mot_passe: String,
     pub nom: String,
+}
+
+impl Equipe {
+    pub fn get_by_name(_nom: String, con: &mut PgConnection) -> QueryResult<Self> {
+        use crate::schema::equipe::dsl::*;
+        equipe
+            .filter(nom.eq(_nom))
+            .select(Self::as_select())
+            .get_result(con)
+    }
+    fn insert_by_name(_nom: String, con: &mut PgConnection) -> QueryResult<Self> {
+        use crate::schema::equipe::dsl::*;
+        let insert = Self {
+            id_equipe: Uuid::new_v4(),
+            pseudo: _nom.to_case(Case::Snake),
+            mot_passe: _nom.to_case(Case::Camel),
+            nom: _nom,
+        };
+        diesel::insert_into(equipe).values(&insert).execute(con)?;
+        Ok(insert)
+    }
+    pub fn get_by_name_or_insert(nom: String, con: &mut PgConnection) -> QueryResult<Self> {
+        match Self::get_by_name(nom.clone(), con) {
+            Ok(o) => Ok(o),
+            Err(err) => {
+                if let diesel::result::Error::NotFound = err {
+                    Self::insert_by_name(nom, con)
+                } else {
+                    Err(err)
+                }
+            }
+        }
+    }
 }

@@ -42,6 +42,8 @@ pub enum Error {
     Io(#[from] std::io::Error),
     #[error(transparent)]
     Csv(#[from] csv::Error),
+    #[error("Cannot parse i32 to Genre")]
+    GenreParse,
 }
 
 impl From<async_graphql::Error> for Error {
@@ -130,6 +132,9 @@ impl ErrorExtensions for Error {
                 Error::Csv(_er) => {
                     e.set("code", "CSV");
                     // e.set("kind", er.kind().)
+                }
+                Error::GenreParse => {
+                    e.set("code", "GENRE_PARSE");
                 }
             })
         }

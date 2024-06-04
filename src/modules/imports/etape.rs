@@ -1,4 +1,4 @@
-use std::{io::Read, str::FromStr};
+use std::io::Read;
 
 use bigdecimal::{BigDecimal, FromPrimitive};
 use csv::Reader;
@@ -48,16 +48,7 @@ impl From<EtapeCSVDATA> for Etape {
 
 impl EtapeCSVDATA {
     pub fn read<R: Read>(mut reader: Reader<R>) -> Vec<Self> {
-        reader
-            .deserialize::<EtapeCSVDATA>()
-            .map(|e| {
-                e.map_err(|er| {
-                    eprintln!("{er}");
-                    er
-                })
-            })
-            .flatten()
-            .collect()
+        reader.deserialize::<EtapeCSVDATA>().flatten().collect()
     }
 }
 
