@@ -51,7 +51,7 @@ diesel::table! {
     v_equipe_point(equipe) {
         equipe -> Uuid,
         points -> BigInt,
-        temps -> BingInt
+        temps -> BigInt
     }
 }
 
