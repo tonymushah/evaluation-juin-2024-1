@@ -85,12 +85,20 @@ impl EquipeMutations {
         ctx.use_pool(move |mut pool| {
             let j = VEquipeCoureur::by_coureur(joueur, &mut pool)?;
             use crate::schema::temps_coureur::dsl::*;
-
-            Ok(delete(temps_coureur)
-                .filter(equipe_coureur.eq(j.id_equipe_coureur))
+            let temps_: TempCoureur = temps_coureur
+                .select(TempCoureur::as_select())
                 .filter(etape.eq(etape_))
-                .returning(TempCoureur::as_select())
-                .get_result(&mut pool)?)
+                .filter(equipe_coureur.eq(j.id_equipe_coureur))
+                .get_result(&mut pool)?;
+            if temps_.temps.is_none() {
+                Ok(delete(temps_coureur)
+                    .filter(equipe_coureur.eq(j.id_equipe_coureur))
+                    .filter(etape.eq(etape_))
+                    .returning(TempCoureur::as_select())
+                    .get_result(&mut pool)?)
+            } else {
+                Err(crate::Error::AlreadyDone)
+            }
         })
         .await
     }

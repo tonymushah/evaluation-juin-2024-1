@@ -48,6 +48,8 @@ pub enum Error {
     LimitCoureurExecded,
     #[error("The given coureur is already in the given etape")]
     AlreadyInEtape,
+    #[error("The coureur has finished this etape")]
+    AlreadyDone,
 }
 
 impl From<async_graphql::Error> for Error {
@@ -142,6 +144,7 @@ impl ErrorExtensions for Error {
                 }
                 Error::LimitCoureurExecded => e.set("code", "LIMIT_COUREUR_EXCEDED"),
                 Error::AlreadyInEtape => e.set("code", "ALREADY_IN_ETAPE"),
+                Error::AlreadyDone => e.set("code", "ALREADY_DONE"),
             })
         }
     }
