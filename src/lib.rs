@@ -1,10 +1,10 @@
 mod error;
 pub mod graphql;
 pub mod models;
-pub(crate) mod modules;
+pub mod modules;
 pub mod reset;
-pub(crate) mod schema;
-pub(crate) mod view;
+pub mod schema;
+pub mod view;
 
 pub use error::Error;
 use graphql::{

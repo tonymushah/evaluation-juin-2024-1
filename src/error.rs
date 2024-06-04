@@ -38,6 +38,10 @@ pub enum Error {
     TryFromInt,
     #[error(transparent)]
     HeaderToStrError(#[from] ToStrError),
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
+    #[error(transparent)]
+    Csv(#[from] csv::Error),
 }
 
 impl From<async_graphql::Error> for Error {
@@ -119,6 +123,14 @@ impl ErrorExtensions for Error {
                 Error::RegexCaptureNameNotFound(_) => e.set("code", "REGEX_CAPTURE_NAME_NOT_FOUND"),
                 Error::TryFromInt => e.set("code", "TRY_FROM_INT"),
                 Error::HeaderToStrError(_) => e.set("code", "HEADER_TO_STR_ERROR"),
+                Error::Io(er) => {
+                    e.set("code", "IO");
+                    e.set("kind", er.kind().to_string());
+                }
+                Error::Csv(_er) => {
+                    e.set("code", "CSV");
+                    // e.set("kind", er.kind().)
+                }
             })
         }
     }
