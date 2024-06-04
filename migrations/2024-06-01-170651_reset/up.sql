@@ -6,7 +6,9 @@ DECLARE
         WHERE tableowner = username AND schemaname = 'public';
 BEGIN
     FOR stmt IN statements LOOP
-        EXECUTE 'TRUNCATE TABLE ' || quote_ident(stmt.tablename) || ' CASCADE;';
+        IF stmt.tablename != '__diesel_schema_migrations' then 
+            EXECUTE 'TRUNCATE TABLE ' || quote_ident(stmt.tablename) || ' CASCADE;';
+        END IF;
     END LOOP;
 END;
 $$ LANGUAGE plpgsql;
