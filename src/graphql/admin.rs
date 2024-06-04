@@ -1,18 +1,18 @@
 use std::ops::Deref;
 
 use actix_web::{get, post, web, HttpRequest, HttpResponse};
-use async_graphql::{http::GraphiQLSource, EmptyMutation, EmptySubscription, Schema};
+use async_graphql::{http::GraphiQLSource, EmptySubscription, Schema};
 use async_graphql_actix_web::{GraphQLRequest, GraphQLResponse};
 
 use crate::{reset::reset_db, ServerState};
 
-use self::query::AdminQueries;
+use self::{mutations::AdminMutations, query::AdminQueries};
 
 pub mod mutations;
 pub mod query;
 pub mod token;
 
-type AdminSchemaInner = Schema<AdminQueries, EmptyMutation, EmptySubscription>;
+type AdminSchemaInner = Schema<AdminQueries, AdminMutations, EmptySubscription>;
 
 #[derive(Default, Clone)]
 pub struct AdminSchema(AdminSchemaInner);
