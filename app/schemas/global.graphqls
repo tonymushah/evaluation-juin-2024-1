@@ -15,7 +15,7 @@ type CategorieResults {
 
 type ClassementQueries {
 	parEquipe(ordre: GraphQLOrdering, pagination: OffsetLimit! = {offset: 0, limit: 10}): EquipePointResults!
-	parCoureur(ordre: GraphQLOrdering, pagination: OffsetLimit!): CoureurPointResults!
+	parCoureur(ordre: GraphQLOrdering, pagination: OffsetLimit! = {offset: 0, limit: 10}): CoureurPointResults!
 	parCategorie(ordre: GraphQLOrdering, pagination: OffsetLimit! = {offset: 0, limit: 10}, id: UUID!): CoureurPointResults!
 }
 
@@ -32,10 +32,22 @@ type CoureurPointResults {
 	total: Int!
 }
 
+"""
+ISO 8601 calendar date without timezone.
+Format: %Y-%m-%d
+
+# Examples
+
+* `1994-11-13`
+* `2000-02-24`
+"""
+scalar Date
+
 type EquipePoint {
-	equipe: Int!
+	equipe: UUID!
 	points: BigDecimal!
 	temps: BigDecimal!
+	nom: String!
 }
 
 type EquipePointResults {
@@ -50,6 +62,7 @@ type GlobalQueries {
 	hello: String!
 	classements: ClassementQueries!
 	categories(pagination: OffsetLimit!): CategorieResults!
+	getCoureur(coureur: Int!): VequipeCoureur!
 }
 
 enum GraphQLOrdering {
@@ -76,6 +89,17 @@ entities without requiring a central allocating authority.
 * [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
 """
 scalar UUID
+
+type VequipeCoureur {
+	coureur: Int!
+	equipe: UUID!
+	nomCoureur: String!
+	genre: Int!
+	dtn: Date!
+	nomEquipe: String!
+	idEquipeCoureur: UUID!
+	points: BigDecimal
+}
 
 directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT

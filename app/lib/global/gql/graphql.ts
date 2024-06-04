@@ -15,6 +15,16 @@ export type Scalars = {
   Float: { input: number; output: number; }
   BigDecimal: { input: any; output: any; }
   /**
+   * ISO 8601 calendar date without timezone.
+   * Format: %Y-%m-%d
+   *
+   * # Examples
+   *
+   * * `1994-11-13`
+   * * `2000-02-24`
+   */
+  Date: { input: any; output: any; }
+  /**
    * A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
    * Strings within GraphQL. UUIDs are used to assign unique identifiers to
    * entities without requiring a central allocating authority.
@@ -58,7 +68,7 @@ export type ClassementQueriesParCategorieArgs = {
 
 export type ClassementQueriesParCoureurArgs = {
   ordre?: InputMaybe<GraphQlOrdering>;
-  pagination: OffsetLimit;
+  pagination?: OffsetLimit;
 };
 
 
@@ -84,7 +94,8 @@ export type CoureurPointResults = {
 
 export type EquipePoint = {
   __typename?: 'EquipePoint';
-  equipe: Scalars['Int']['output'];
+  equipe: Scalars['UUID']['output'];
+  nom: Scalars['String']['output'];
   points: Scalars['BigDecimal']['output'];
   temps: Scalars['BigDecimal']['output'];
 };
@@ -101,12 +112,18 @@ export type GlobalQueries = {
   __typename?: 'GlobalQueries';
   categories: CategorieResults;
   classements: ClassementQueries;
+  getCoureur: VequipeCoureur;
   hello: Scalars['String']['output'];
 };
 
 
 export type GlobalQueriesCategoriesArgs = {
   pagination: OffsetLimit;
+};
+
+
+export type GlobalQueriesGetCoureurArgs = {
+  coureur: Scalars['Int']['input'];
 };
 
 export enum GraphQlOrdering {
@@ -117,4 +134,16 @@ export enum GraphQlOrdering {
 export type OffsetLimit = {
   limit: Scalars['Int']['input'];
   offset: Scalars['Int']['input'];
+};
+
+export type VequipeCoureur = {
+  __typename?: 'VequipeCoureur';
+  coureur: Scalars['Int']['output'];
+  dtn: Scalars['Date']['output'];
+  equipe: Scalars['UUID']['output'];
+  genre: Scalars['Int']['output'];
+  idEquipeCoureur: Scalars['UUID']['output'];
+  nomCoureur: Scalars['String']['output'];
+  nomEquipe: Scalars['String']['output'];
+  points?: Maybe<Scalars['BigDecimal']['output']>;
 };
