@@ -35,3 +35,13 @@ pub struct Etape {
     pub depart: PrimitiveDateTime,
     pub finished: Option<PrimitiveDateTime>,
 }
+
+impl Etape {
+    pub fn get(rang_: i32, con: &mut PgConnection) -> QueryResult<Etape> {
+        use crate::schema::etape::dsl::*;
+        etape
+            .select(Self::as_select())
+            .filter(rang.eq(rang_))
+            .get_result(con)
+    }
+}

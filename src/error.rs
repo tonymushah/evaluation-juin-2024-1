@@ -44,6 +44,10 @@ pub enum Error {
     Csv(#[from] csv::Error),
     #[error("Cannot parse i32 to Genre")]
     GenreParse,
+    #[error("Exceded limit coureur")]
+    LimitCoureurExecded,
+    #[error("The given coureur is already in the given etape")]
+    AlreadyInEtape,
 }
 
 impl From<async_graphql::Error> for Error {
@@ -136,6 +140,8 @@ impl ErrorExtensions for Error {
                 Error::GenreParse => {
                     e.set("code", "GENRE_PARSE");
                 }
+                Error::LimitCoureurExecded => e.set("code", "LIMIT_COUREUR_EXCEDED"),
+                Error::AlreadyInEtape => e.set("code", "ALREADY_IN_ETAPE"),
             })
         }
     }
