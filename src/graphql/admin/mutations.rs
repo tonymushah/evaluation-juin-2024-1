@@ -1,6 +1,7 @@
 pub mod etape;
+pub mod import;
 
-use self::etape::EtapeMutation;
+use self::{etape::EtapeMutation, import::ImportMutations};
 
 use std::ops::Deref;
 
@@ -38,6 +39,9 @@ impl AdminMutations {
         } else {
             Err(crate::Error::Forbidden)
         }
+    }
+    pub async fn import(&self) -> ImportMutations {
+        ImportMutations
     }
     pub async fn logout(&self, ctx: &Context<'_>) -> crate::Result<bool> {
         ctx.reset().await?;

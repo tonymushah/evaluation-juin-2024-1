@@ -1,6 +1,6 @@
 use actix_web::web::block;
 use async_graphql::{Context, InputObject, SimpleObject};
-use diesel::{query_dsl::methods::LoadQuery, PgConnection, QueryResult};
+use diesel::{query_dsl::methods::LoadQuery, Connection, PgConnection, QueryResult};
 
 pub mod admin;
 pub mod equipe;
@@ -27,6 +27,20 @@ pub trait GetPoolConnection {
         async {
             let pool = self.pool()?;
             block(move || usage(pool)).await?
+        }
+    }
+    fn use_pool_transaction<D, U>(
+        &self,
+        usage: U,
+    ) -> impl std::future::Future<Output = crate::Result<D>> + Send
+    where
+        Self: Sync,
+        D: Send + 'static,
+        U: FnOnce(&mut DbPoolConnection) -> crate::Result<D> + Send + 'static,
+    {
+        async {
+            let mut pool = self.pool()?;
+            block(move || pool.transaction(usage)).await?
         }
     }
 }
