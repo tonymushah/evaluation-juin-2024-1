@@ -47,8 +47,8 @@ export type Scalars = {
 export type CoueurPoint = {
   __typename?: 'CoueurPoint';
   coureur: Scalars['Int']['output'];
-  points: Scalars['BigDecimal']['output'];
-  temps: Scalars['BigDecimal']['output'];
+  points: Scalars['Int']['output'];
+  temps: Scalars['Int']['output'];
 };
 
 export type CoureurPointResults = {
@@ -186,5 +186,5 @@ export type VequipeCoureur = {
   idEquipeCoureur: Scalars['UUID']['output'];
   nomCoureur: Scalars['String']['output'];
   nomEquipe: Scalars['String']['output'];
-  points?: Maybe<Scalars['BigDecimal']['output']>;
+  points?: Maybe<Scalars['Int']['output']>;
 };
