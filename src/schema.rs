@@ -53,6 +53,15 @@ diesel::table! {
 }
 
 diesel::table! {
+    penalite (id_penalite) {
+        id_penalite -> Uuid,
+        etape -> Int4,
+        equipe -> Uuid,
+        valeur -> Int4,
+    }
+}
+
+diesel::table! {
     points (rang) {
         rang -> Int4,
         valeur -> Int4,
@@ -73,6 +82,8 @@ diesel::joinable!(coureur_categorie -> categorie (categorie));
 diesel::joinable!(coureur_categorie -> coureur (coureur));
 diesel::joinable!(equipe_coureur -> coureur (coureur));
 diesel::joinable!(equipe_coureur -> equipe (equipe));
+diesel::joinable!(penalite -> equipe (equipe));
+diesel::joinable!(penalite -> etape (etape));
 diesel::joinable!(temps_coureur -> equipe_coureur (equipe_coureur));
 diesel::joinable!(temps_coureur -> etape (etape));
 
@@ -83,6 +94,7 @@ diesel::allow_tables_to_appear_in_same_query!(
     equipe,
     equipe_coureur,
     etape,
+    penalite,
     points,
     temps_coureur,
 );
