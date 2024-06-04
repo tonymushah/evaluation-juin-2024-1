@@ -72,7 +72,9 @@ impl<'a> AddPointJoueurModule<'a> {
             .filter(etape.eq(self.etape))
             .get_results(self.con)?
         {
-            let _ = t.attribute_points(self.con);
+            if let Err(e) = t.attribute_points(self.con) {
+                eprintln!("er-- {e}");
+            }
         }
         Ok(())
     }
@@ -86,7 +88,11 @@ impl<'a> AddPointJoueurModule<'a> {
 
 impl TempCoureur {
     pub fn attribute_points(&mut self, con: &mut PgConnection) -> QueryResult<()> {
-        let entry = RangEntry::get_rang_from_etape(con, self.etape)?
+        let entry = RangEntry::get_rang_from_etape(con, self.etape)
+            .map_err(|err| {
+                eprintln!("renge - {err}");
+                err
+            })?
             .into_iter()
             .find(|e| e.equipe_coureur == self.equipe_coureur)
             .ok_or(diesel::result::Error::NotFound)?;
@@ -94,7 +100,7 @@ impl TempCoureur {
             use crate::schema::points::dsl::*;
             points
                 .select(valeur)
-                .filter(rang.eq(entry.rang))
+                .filter(rang.eq(entry.rang as i32))
                 .get_result(con)
                 .unwrap_or_default()
         };
