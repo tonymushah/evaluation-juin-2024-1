@@ -98,6 +98,7 @@ impl Default for OffsetLimit {
     name = "VEquipeCoureurResults",
     params(crate::models::equipe_coureur::VEquipeCoureur)
 ))]
+#[graphql(concrete(name = "PenalitesResults", params(crate::models::penalite::Penalite)))]
 pub struct ResultsData<T>
 where
     T: async_graphql::OutputType,
