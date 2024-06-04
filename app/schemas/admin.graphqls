@@ -1,11 +1,100 @@
+type AdminEtape {
+	rang: Int!
+	longueur: BigDecimal!
+	nom: String!
+	nbCoureurParEquipe: Int!
+	depart: LocalDateTime!
+	finished: LocalDateTime
+	coureur(pagination: OffsetLimit!): EtapeCoureurResults!
+}
+
+type AdminEtapeResults {
+	data: [AdminEtape!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
+
 type AdminQueries {
 	hello: String!
+	etape: EtapeQueries!
+}
+
+scalar BigDecimal
+
+
+type Coureur {
+	numeroDosard: Int!
+	nom: String!
+	genre: Int!
+	dtn: Date!
+}
+
+"""
+ISO 8601 calendar date without timezone.
+Format: %Y-%m-%d
+
+# Examples
+
+* `1994-11-13`
+* `2000-02-24`
+"""
+scalar Date
+
+type Equipe {
+	idEquipe: UUID!
+	pseudo: String!
+	nom: String!
+}
+
+type EtapeCoureur {
+	temps: Int
+	equipeCoureur: UUID!
+	points: Int
+	coureur: Coureur!
+	equipe: Equipe!
+}
+
+type EtapeCoureurResults {
+	data: [EtapeCoureur!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
+
+type EtapeQueries {
+	list(pagination: OffsetLimit!): AdminEtapeResults!
+	unique(rang: Int!): AdminEtape!
 }
 
 
 
 
+"""
+A local datetime without timezone offset.
 
+The input/output is a string in ISO 8601 format without timezone, including
+subseconds. E.g. "2022-01-12T07:30:19.12345".
+"""
+scalar LocalDateTime
+
+input OffsetLimit {
+	offset: Int!
+	limit: Int!
+}
+
+
+"""
+A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
+Strings within GraphQL. UUIDs are used to assign unique identifiers to
+entities without requiring a central allocating authority.
+
+# References
+
+* [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)
+* [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
+"""
+scalar UUID
 
 directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
