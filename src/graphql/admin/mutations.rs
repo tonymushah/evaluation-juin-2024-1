@@ -7,7 +7,9 @@ use self::{etape::EtapeMutation, import::ImportMutations, penalites::PenaliteMua
 use std::ops::Deref;
 
 use async_graphql::{Context, Object};
+use diesel::{dsl::sql, sql_types::Untyped, RunQueryDsl};
 use jwt::SignWithKey;
+
 use uuid::Uuid;
 
 use crate::{
@@ -59,6 +61,15 @@ impl AdminMutations {
             Ok(SystemCategories::generate_categories(pool)?.len())
         })
         .await
+    }
+    pub async fn truncate_categories(&self, ctx: &Context<'_>) -> crate::Result<bool> {
+        ctx.use_pool_transaction(|pool| {
+            sql::<Untyped>("TRUNCATE TABLE coureur_categorie CASCADE;").execute(pool)?;
+            Ok(())
+        })
+        .await?;
+
+        Ok(true)
     }
 }
 
