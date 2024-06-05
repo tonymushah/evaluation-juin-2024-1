@@ -25,6 +25,12 @@ Format: %Y-%m-%d
 """
 scalar Date
 
+type Equipe {
+	idEquipe: UUID!
+	pseudo: String!
+	nom: String!
+}
+
 type EquipeMutations {
 	login(username: String!, password: String!): String!
 	ajouterJoueurToEtape(etape: Int!, joueur: Int!): TempCoureur!
@@ -37,6 +43,7 @@ type EquipeQueries {
 	listCoureur(pagination: OffsetLimit!): VEquipeCoureurResults!
 	coureur(dosard: Int!): VequipeCoureur!
 	classementParCategorie(ordre: GraphQLOrdering, pagination: OffsetLimit! = {offset: 0, limit: 10}, categorie: UUID!): CoureurPointResults!
+	current: Equipe!
 }
 
 type Etape {
