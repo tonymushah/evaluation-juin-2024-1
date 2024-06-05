@@ -4,6 +4,8 @@ import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import { route } from '$lib/ROUTES';
 
+export const ssr = false;
+
 export const load: LayoutServerLoad = async function ({ cookies }) {
 	if (cookies.get(CLIENT_TOKEN_KEY)) {
 		return {
