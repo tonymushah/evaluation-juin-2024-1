@@ -12,9 +12,9 @@
 	$: isLoading = c.isLoading;
 	$: reset = c.reset;
 	$: next = c.next;
-	onMount(async () => {
-		await reset();
-	});
+	$: {
+		reset();
+	}
 </script>
 
 {#if $isLoading}
