@@ -25,7 +25,7 @@ export const actions = {
 		const user = form.get('pseudo');
 		const password = form.get('password');
 		if (typeof user != 'string' || typeof password != 'string') {
-			error(400, {
+			return error(400, {
 				message: 'invalid input'
 			});
 		}
@@ -39,9 +39,9 @@ export const actions = {
 			cookies.set(CLIENT_TOKEN_KEY, res.data.login, {
 				path: '/'
 			});
-			redirect(300, route('/equipe'));
+			return redirect(300, route('/equipe'));
 		} else if (res.error) {
-			error(500, res.error);
+			return error(500, res.error);
 		}
 		return;
 	}
