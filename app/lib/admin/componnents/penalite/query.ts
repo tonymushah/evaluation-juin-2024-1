@@ -51,8 +51,8 @@ export default function getClassement(): ClassementGlobal {
 					...resu.data.map((e) => ({
 						id: e.idPenalite,
 						temps: formatSecond(e.valeur),
-						etape: e.etapeData.nom,
-						equipe: e.equipeData.nom
+						etape: e.equipeData.nom,
+						equipe: e.etapeData.nom
 					}))
 				);
 				return a;
