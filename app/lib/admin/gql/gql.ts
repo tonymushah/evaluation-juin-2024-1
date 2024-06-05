@@ -18,6 +18,7 @@ const documents = {
     "\n\tquery selectEtape($page: OffsetLimit!) {\n\t\tetape {\n\t\t\tlist(pagination: $page) {\n\t\t\t\tdata {\n\t\t\t\t\tnom\n\t\t\t\t\trang\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\ttotal\n\t\t\t\toffset\n\t\t\t}\n\t\t}\n\t}\n": types.SelectEtapeDocument,
     "\n\tquery penalites($page: OffsetLimit!) {\n\t\tpenalite {\n\t\t\tlist(pagination: $page) {\n\t\t\t\tdata {\n\t\t\t\t\tidPenalite\n\t\t\t\t\tetapeData {\n\t\t\t\t\t\tnom\n\t\t\t\t\t}\n\t\t\t\t\tequipeData {\n\t\t\t\t\t\tnom\n\t\t\t\t\t}\n\t\t\t\t\tvaleur\n\t\t\t\t}\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t\tlimit\n\t\t\t}\n\t\t}\n\t}\n": types.PenalitesDocument,
     "\n\tmutation generateCat {\n\t\tgenerateCategories\n\t}\n": types.GenerateCatDocument,
+    "\n\tmutation resetCat {\n\t\ttruncateCategories\n\t}\n": types.ResetCatDocument,
     "\n\tquery getAdminEtape($rang: Int!, $courPage: OffsetLimit!) {\n\t\tetape {\n\t\t\tunique(rang: $rang) {\n\t\t\t\tdepart\n\t\t\t\tfinished\n\t\t\t\trang\n\t\t\t\tnom\n\t\t\t\tnbCoureurParEquipe\n\t\t\t\tlongueur\n\t\t\t\tcoureur(pagination: $courPage) {\n\t\t\t\t\tdata {\n\t\t\t\t\t\ttemps\n\t\t\t\t\t\tpoints\n\t\t\t\t\t\tcoureur {\n\t\t\t\t\t\t\tnumeroDosard\n\t\t\t\t\t\t\tnom\n\t\t\t\t\t\t}\n\t\t\t\t\t\tequipeCoureur\n\t\t\t\t\t\tequipe {\n\t\t\t\t\t\t\tnom\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tlimit\n\t\t\t\t\ttotal\n\t\t\t\t\toffset\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.GetAdminEtapeDocument,
     "\n\tmutation addTimeToJoueur($etape: Int!, $dosard: Int!, $temps: TempsCoureur!) {\n\t\tetape(id: $etape) {\n\t\t\taddTime(dosard: $dosard, temps: $temps) {\n\t\t\t\ttemps\n\t\t\t\tetape\n\t\t\t\tidTempsCoureur\n\t\t\t\tpoints\n\t\t\t}\n\t\t}\n\t}\n": types.AddTimeToJoueurDocument,
     "\n\tmutation importPoints($file: Upload!) {\n\t\timport {\n\t\t\tpoints(file: $file) {\n\t\t\t\trang\n\t\t\t\tvaleur\n\t\t\t}\n\t\t}\n\t}\n": types.ImportPointsDocument,
@@ -62,6 +63,10 @@ export function graphql(source: "\n\tquery penalites($page: OffsetLimit!) {\n\t\
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\tmutation generateCat {\n\t\tgenerateCategories\n\t}\n"): (typeof documents)["\n\tmutation generateCat {\n\t\tgenerateCategories\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tmutation resetCat {\n\t\ttruncateCategories\n\t}\n"): (typeof documents)["\n\tmutation resetCat {\n\t\ttruncateCategories\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
