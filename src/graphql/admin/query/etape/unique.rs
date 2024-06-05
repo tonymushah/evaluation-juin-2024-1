@@ -42,6 +42,7 @@ impl AdminEtape {
             Ok(v_temps_coureur_etape_equipe_coureur
                 .filter(etape.eq(etape_))
                 .select(EtapeCoureur::as_select())
+                .order(temps.asc())
                 .paginate_with_param(pagination)
                 .to_results_data(&mut pool)?)
         })
