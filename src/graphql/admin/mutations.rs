@@ -64,7 +64,7 @@ impl AdminMutations {
     }
     pub async fn truncate_categories(&self, ctx: &Context<'_>) -> crate::Result<bool> {
         ctx.use_pool_transaction(|pool| {
-            sql::<Untyped>("TRUNCATE TABLE coureur_categorie CASCADE;").execute(pool)?;
+            sql::<Untyped>("TRUNCATE TABLE coureur_categorie;").execute(pool)?;
             Ok(())
         })
         .await?;
