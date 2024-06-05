@@ -63,11 +63,9 @@ impl ImportMutations {
         etapes.dedup();
 
         ctx.use_pool(move |mut pool| {
-            let _temps = data
-                .into_iter()
-                .flat_map(|res| res.insert(&mut pool))
-                .map(|res| res.id_temps_coureur)
-                .collect::<Vec<_>>();
+            for res in data {
+                res.insert(&mut pool)?;
+            }
             Ok(attribute_points_to_etapes(&mut pool, &etapes)?)
         })
         .await

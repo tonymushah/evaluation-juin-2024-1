@@ -12,7 +12,7 @@
 		<img class="h-12" src="/logo2.png" alt="Ultimate Team Race" />
 	</NavBrand>
 	<div class="flex md:order-2">
-		<Button size="sm">Se connecter</Button>
+		<Button href={route('/equipe/login')} size="sm">Se connecter</Button>
 		<NavHamburger />
 	</div>
 	<h1 class="font-brand text-orange-600 font-bold text-4xl">Ultimate Team Race</h1>
