@@ -74,6 +74,7 @@ export type AdminEtapeResults = {
 export type AdminMutations = {
   __typename?: 'AdminMutations';
   etape: EtapeMutation;
+  generateCategories: Scalars['Int']['output'];
   import: ImportMutations;
   login: Scalars['String']['output'];
   logout: Scalars['Boolean']['output'];
@@ -93,10 +94,30 @@ export type AdminMutationsLoginArgs = {
 
 export type AdminQueries = {
   __typename?: 'AdminQueries';
+  categories: CategorieResults;
   equipe: EquipeQueries;
   etape: EtapeQueries;
   hello: Scalars['String']['output'];
   penalite: PenalitesQueries;
+};
+
+
+export type AdminQueriesCategoriesArgs = {
+  pagination: OffsetLimit;
+};
+
+export type Categorie = {
+  __typename?: 'Categorie';
+  designation: Scalars['String']['output'];
+  idCategorie: Scalars['UUID']['output'];
+};
+
+export type CategorieResults = {
+  __typename?: 'CategorieResults';
+  data: Array<Categorie>;
+  limit: Scalars['Int']['output'];
+  offset: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
 };
 
 export type Coureur = {

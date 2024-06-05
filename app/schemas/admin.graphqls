@@ -22,6 +22,7 @@ type AdminMutations {
 	import: ImportMutations!
 	logout: Boolean!
 	penalite: PenaliteMuations!
+	generateCategories: Int!
 }
 
 type AdminQueries {
@@ -29,10 +30,23 @@ type AdminQueries {
 	etape: EtapeQueries!
 	penalite: PenalitesQueries!
 	equipe: EquipeQueries!
+	categories(pagination: OffsetLimit!): CategorieResults!
 }
 
 scalar BigDecimal
 
+
+type Categorie {
+	idCategorie: UUID!
+	designation: String!
+}
+
+type CategorieResults {
+	data: [Categorie!]!
+	limit: Int!
+	offset: Int!
+	total: Int!
+}
 
 type Coureur {
 	numeroDosard: Int!
@@ -134,7 +148,7 @@ type Penalite {
 }
 
 input PenaliteInput {
-	idPenalite: UUID! = "163b767b-bc37-476b-9037-2472a5c5414b"
+	idPenalite: UUID! = "232b8b92-89d9-4558-8a6e-d59ef864caa2"
 	etape: Int!
 	valeur: Int!
 	equipe: UUID!
