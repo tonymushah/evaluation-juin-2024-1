@@ -10,7 +10,9 @@ use async_graphql::{Context, Object};
 use jwt::SignWithKey;
 use uuid::Uuid;
 
-use crate::{graphql::GetPoolConnection, reset::reset_db};
+use crate::{
+    graphql::GetPoolConnection, modules::generate_categories::SystemCategories, reset::reset_db,
+};
 
 use super::token::{extract_admin_password, AdminHmac, VerifyAdminSession};
 
@@ -50,6 +52,10 @@ impl AdminMutations {
     }
     pub async fn penalite(&self) -> PenaliteMuations {
         PenaliteMuations
+    }
+    pub async fn generate_categories(&self, ctx: &Context<'_>) -> crate::Result<usize> {
+        ctx.use_pool(|mut pool| Ok(SystemCategories::generate_categories(&mut pool)?.len()))
+            .await
     }
 }
 
