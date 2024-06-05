@@ -54,8 +54,11 @@ impl AdminMutations {
         PenaliteMuations
     }
     pub async fn generate_categories(&self, ctx: &Context<'_>) -> crate::Result<usize> {
-        ctx.use_pool(|mut pool| Ok(SystemCategories::generate_categories(&mut pool)?.len()))
-            .await
+        ctx.use_pool_transaction(|pool| {
+            let _ = SystemCategories::seed(pool);
+            Ok(SystemCategories::generate_categories(pool)?.len())
+        })
+        .await
     }
 }
 
