@@ -1,15 +1,10 @@
 <script lang="ts">
-	import { TabItem, Table, Tabs } from 'flowbite-svelte';
-	import Generale, {
-		type ClassementItem as CGeneItem
-	} from '$lib/global/componnents/classement/general/TableClassmmentGenerale.svelte';
-	import Equipes, {
-		type ClassementItem as CEqupeItem
-	} from '$lib/global/componnents/classement/equipe/TableClassmmentEquipe.svelte';
-	import { readable } from 'svelte/store';
 	import { brand } from '$lib';
-	import type { PageServerData } from './$types';
+	import Equipes from '$lib/global/componnents/classement/equipe/TableClassmmentEquipe.svelte';
+	import Generale from '$lib/global/componnents/classement/general/TableClassmmentGenerale.svelte';
 	import { Client, cacheExchange, fetchExchange, setContextClient } from '@urql/svelte';
+	import { TabItem, Tabs } from 'flowbite-svelte';
+	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 	setContextClient(

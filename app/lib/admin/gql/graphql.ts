@@ -1,4 +1,5 @@
 /* eslint-disable */
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -31,6 +32,7 @@ export type Scalars = {
    * subseconds. E.g. "2022-01-12T07:30:19.12345".
    */
   LocalDateTime: { input: any; output: any; }
+  TempsCoureur: { input: any; output: any; }
   /**
    * A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
    * Strings within GraphQL. UUIDs are used to assign unique identifiers to
@@ -42,6 +44,7 @@ export type Scalars = {
    * * [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
    */
   UUID: { input: any; output: any; }
+  Upload: { input: any; output: any; }
 };
 
 export type AdminEtape = {
@@ -66,6 +69,26 @@ export type AdminEtapeResults = {
   limit: Scalars['Int']['output'];
   offset: Scalars['Int']['output'];
   total: Scalars['Int']['output'];
+};
+
+export type AdminMutations = {
+  __typename?: 'AdminMutations';
+  etape: EtapeMutation;
+  import: ImportMutations;
+  login: Scalars['String']['output'];
+  logout: Scalars['Boolean']['output'];
+  penalite: PenaliteMuations;
+  resetDb: Scalars['Boolean']['output'];
+};
+
+
+export type AdminMutationsEtapeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type AdminMutationsLoginArgs = {
+  password: Scalars['String']['input'];
 };
 
 export type AdminQueries = {
@@ -136,6 +159,18 @@ export type EtapeCoureurResults = {
   total: Scalars['Int']['output'];
 };
 
+export type EtapeMutation = {
+  __typename?: 'EtapeMutation';
+  addTime: TempCoureur;
+};
+
+
+export type EtapeMutationAddTimeArgs = {
+  dosard: Scalars['Int']['input'];
+  point?: InputMaybe<Scalars['Int']['input']>;
+  temps: Scalars['TempsCoureur']['input'];
+};
+
 export type EtapeQueries = {
   __typename?: 'EtapeQueries';
   list: AdminEtapeResults;
@@ -152,6 +187,28 @@ export type EtapeQueriesUniqueArgs = {
   rang: Scalars['Int']['input'];
 };
 
+export type ImportMutations = {
+  __typename?: 'ImportMutations';
+  etapes: Array<Etape>;
+  points: Array<Points>;
+  resultats: Array<TempCoureur>;
+};
+
+
+export type ImportMutationsEtapesArgs = {
+  file: Scalars['Upload']['input'];
+};
+
+
+export type ImportMutationsPointsArgs = {
+  file: Scalars['Upload']['input'];
+};
+
+
+export type ImportMutationsResultatsArgs = {
+  file: Scalars['Upload']['input'];
+};
+
 export type OffsetLimit = {
   limit: Scalars['Int']['input'];
   offset: Scalars['Int']['input'];
@@ -165,6 +222,29 @@ export type Penalite = {
   etapeData: Etape;
   idPenalite: Scalars['UUID']['output'];
   valeur: Scalars['Int']['output'];
+};
+
+export type PenaliteInput = {
+  equipe: Scalars['UUID']['input'];
+  etape: Scalars['Int']['input'];
+  idPenalite?: Scalars['UUID']['input'];
+  valeur: Scalars['Int']['input'];
+};
+
+export type PenaliteMuations = {
+  __typename?: 'PenaliteMuations';
+  remove: Penalite;
+  upsert: Penalite;
+};
+
+
+export type PenaliteMuationsRemoveArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+export type PenaliteMuationsUpsertArgs = {
+  input: PenaliteInput;
 };
 
 export type PenalitesQueries = {
@@ -184,3 +264,34 @@ export type PenalitesResults = {
   offset: Scalars['Int']['output'];
   total: Scalars['Int']['output'];
 };
+
+export type Points = {
+  __typename?: 'Points';
+  rang: Scalars['Int']['output'];
+  valeur: Scalars['Int']['output'];
+};
+
+export type TempCoureur = {
+  __typename?: 'TempCoureur';
+  equipeCoureur: Scalars['UUID']['output'];
+  etape: Scalars['Int']['output'];
+  idTempsCoureur: Scalars['UUID']['output'];
+  points?: Maybe<Scalars['Int']['output']>;
+  temps?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ListAdminEtapeQueryVariables = Exact<{
+  pagination: OffsetLimit;
+}>;
+
+
+export type ListAdminEtapeQuery = { __typename?: 'AdminQueries', etape: { __typename?: 'EtapeQueries', list: { __typename?: 'AdminEtapeResults', offset: number, limit: number, total: number, data: Array<{ __typename?: 'AdminEtape', depart: any, finished?: any | null, rang: number, nom: string, nbCoureurParEquipe: number, longueur: any }> } } };
+
+export type ResetDbMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ResetDbMutation = { __typename?: 'AdminMutations', resetDb: boolean };
+
+
+export const ListAdminEtapeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"listAdminEtape"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OffsetLimit"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"etape"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"list"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"depart"}},{"kind":"Field","name":{"kind":"Name","value":"finished"}},{"kind":"Field","name":{"kind":"Name","value":"rang"}},{"kind":"Field","name":{"kind":"Name","value":"depart"}},{"kind":"Field","name":{"kind":"Name","value":"nom"}},{"kind":"Field","name":{"kind":"Name","value":"nbCoureurParEquipe"}},{"kind":"Field","name":{"kind":"Name","value":"longueur"}}]}},{"kind":"Field","name":{"kind":"Name","value":"offset"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]}}]} as unknown as DocumentNode<ListAdminEtapeQuery, ListAdminEtapeQueryVariables>;
+export const ResetDbDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"resetDB"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetDb"}}]}}]} as unknown as DocumentNode<ResetDbMutation, ResetDbMutationVariables>;

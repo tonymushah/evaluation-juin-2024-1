@@ -1,0 +1,49 @@
+<script lang="ts">
+	import TableEtapeRow from '$lib/admin/componnents/etape/TableEtapeRow.svelte';
+	import { Button, Table, TableBody, TableHead, TableHeadCell } from 'flowbite-svelte';
+	import getClassement from './query';
+	import { onMount } from 'svelte';
+
+	const { data, hasNext, isLoading, reset, next } = getClassement();
+	onMount(async () => {
+		await reset();
+	});
+</script>
+
+{#if $isLoading}
+	<h3>Loading...</h3>
+{/if}
+
+<Button disabled={$isLoading} on:click={reset}>Reset</Button>
+
+<Table color="blue">
+	<TableHead>
+		<TableHeadCell>Rang</TableHeadCell>
+		<TableHeadCell>Nom etape</TableHeadCell>
+		<TableHeadCell>Kilometrage</TableHeadCell>
+		<TableHeadCell>Date Debut</TableHeadCell>
+		<TableHeadCell>Date Fin</TableHeadCell>
+	</TableHead>
+	<TableBody tableBodyClass="divide-y">
+		{#each $data as class_}
+			<TableEtapeRow
+				rang={class_.rang}
+				nom={class_.nom}
+				kilometrage={class_.longueur}
+				dateDebut={class_.depart}
+				dateFin={class_.finished}
+			/>
+		{/each}
+	</TableBody>
+</Table>
+
+{#if $hasNext && !$isLoading}
+	<div class="flex w-full items-center justify-center">
+		<Button
+			disabled={$isLoading}
+			on:click={async () => {
+				await next();
+			}}>Next</Button
+		>
+	</div>
+{/if}

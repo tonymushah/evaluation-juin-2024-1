@@ -15,6 +15,15 @@ type AdminEtapeResults {
 	total: Int!
 }
 
+type AdminMutations {
+	resetDb: Boolean!
+	etape(id: Int!): EtapeMutation!
+	login(password: String!): String!
+	import: ImportMutations!
+	logout: Boolean!
+	penalite: PenaliteMuations!
+}
+
 type AdminQueries {
 	hello: String!
 	etape: EtapeQueries!
@@ -84,12 +93,22 @@ type EtapeCoureurResults {
 	total: Int!
 }
 
+type EtapeMutation {
+	addTime(dosard: Int!, temps: TempsCoureur!, point: Int): TempCoureur!
+}
+
 type EtapeQueries {
 	list(pagination: OffsetLimit!): AdminEtapeResults!
 	unique(rang: Int!): AdminEtape!
 }
 
 
+
+type ImportMutations {
+	points(file: Upload!): [Points!]!
+	etapes(file: Upload!): [Etape!]!
+	resultats(file: Upload!): [TempCoureur!]!
+}
 
 
 """
@@ -114,6 +133,18 @@ type Penalite {
 	etapeData: Etape!
 }
 
+input PenaliteInput {
+	idPenalite: UUID! = "76ac2d70-636e-4efd-ac8c-69ee31cd0562"
+	etape: Int!
+	valeur: Int!
+	equipe: UUID!
+}
+
+type PenaliteMuations {
+	upsert(input: PenaliteInput!): Penalite!
+	remove(id: UUID!): Penalite!
+}
+
 type PenalitesQueries {
 	list(pagination: OffsetLimit! = {offset: 0, limit: 10}): PenalitesResults!
 }
@@ -125,6 +156,21 @@ type PenalitesResults {
 	total: Int!
 }
 
+type Points {
+	rang: Int!
+	valeur: Int!
+}
+
+
+type TempCoureur {
+	idTempsCoureur: UUID!
+	temps: Int
+	points: Int
+	equipeCoureur: UUID!
+	etape: Int!
+}
+
+scalar TempsCoureur
 
 """
 A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
@@ -138,8 +184,11 @@ entities without requiring a central allocating authority.
 """
 scalar UUID
 
+scalar Upload
+
 directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 schema {
 	query: AdminQueries
+	mutation: AdminMutations
 }
