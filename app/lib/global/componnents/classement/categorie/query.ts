@@ -1,15 +1,14 @@
 import { get_paginated_init_data, type PaginatedData } from '$lib';
 import { graphql } from '$lib/global/gql';
-import type { EquipePoint, GraphQlOrdering } from '$lib/global/gql/graphql';
+import type { CoueurPoint, GraphQlOrdering } from '$lib/global/gql/graphql';
 import { readonly, type Readable } from 'svelte/store';
 
 const query = graphql(`
-	query classementEquipeGenerale($ordre: GraphQLOrdering = DESCENDING, $pagination: OffsetLimit) {
+	query classementCategorie($ordre: GraphQLOrdering, $pagination: OffsetLimit, $categorie: UUID!) {
 		classements {
-			parEquipe(ordre: $ordre, pagination: $pagination) {
+			parCategorie(ordre: $ordre, pagination: $pagination, id: $categorie) {
 				data {
-					equipe
-					nom
+					coureur
 					temps
 					points
 				}
@@ -21,25 +20,23 @@ const query = graphql(`
 	}
 `);
 
-type ClassementGlobal = PaginatedData<EquipePoint>;
+type ClassementGlobal = PaginatedData<CoueurPoint>;
 
-export default function getClassement(ordre?: Readable<GraphQlOrdering>): ClassementGlobal {
-	const { client, data, isLoading, hasNext, error } = get_paginated_init_data<EquipePoint>();
+export default function getClassement(categorie: string): ClassementGlobal {
+	const { client, data, isLoading, hasNext, error } = get_paginated_init_data<CoueurPoint>();
 	let offset = 0;
 	let limit = 10;
 	async function next() {
 		isLoading.set(true);
 		const res = await client
 			.query(query, {
-				pagination: { offset, limit }
+				pagination: { offset, limit },
+				categorie
 			})
 			.toPromise()
-			.catch((e) => {
-				isLoading.set(false);
-				return e;
-			});
+			.finally(() => isLoading.set(false));
 		if (res.data) {
-			const resu = res.data.classements.parEquipe;
+			const resu = res.data.classements.parCategorie;
 			data.update((a) => {
 				a.push(...resu.data);
 				return a;
@@ -53,15 +50,8 @@ export default function getClassement(ordre?: Readable<GraphQlOrdering>): Classe
 		} else if (res.error) {
 			error.set(res.error);
 		}
-		isLoading.set(false);
 	}
-	const obs = new IntersectionObserver(() => {
-		return isLoading.subscribe((is) => {
-			if (!is) {
-				next();
-			}
-		});
-	});
+	const obs = new IntersectionObserver(next);
 	return {
 		data: readonly(data),
 		isLoading: readonly(isLoading),

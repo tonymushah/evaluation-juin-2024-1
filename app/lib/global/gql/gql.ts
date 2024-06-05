@@ -13,6 +13,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n\tquery classementCategorie($ordre: GraphQLOrdering, $pagination: OffsetLimit, $categorie: UUID!) {\n\t\tclassements {\n\t\t\tparCategorie(ordre: $ordre, pagination: $pagination, id: $categorie) {\n\t\t\t\tdata {\n\t\t\t\t\tcoureur\n\t\t\t\t\ttemps\n\t\t\t\t\tpoints\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t}\n\t\t}\n\t}\n": types.ClassementCategorieDocument,
+    "\n\tquery categories($page: OffsetLimit!) {\n\t\tcategories(pagination: $page) {\n\t\t\tlimit\n\t\t\ttotal\n\t\t\tdata {\n\t\t\t\tdesignation\n\t\t\t\tidCategorie\n\t\t\t}\n\t\t\toffset\n\t\t}\n\t}\n": types.CategoriesDocument,
     "\n\tquery classementEquipeGenerale($ordre: GraphQLOrdering = DESCENDING, $pagination: OffsetLimit) {\n\t\tclassements {\n\t\t\tparEquipe(ordre: $ordre, pagination: $pagination) {\n\t\t\t\tdata {\n\t\t\t\t\tequipe\n\t\t\t\t\tnom\n\t\t\t\t\ttemps\n\t\t\t\t\tpoints\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t}\n\t\t}\n\t}\n": types.ClassementEquipeGeneraleDocument,
     "\n\tquery classementGenerale($ordre: GraphQLOrdering, $pagination: OffsetLimit) {\n\t\tclassements {\n\t\t\tparCoureur(ordre: $ordre, pagination: $pagination) {\n\t\t\t\tdata {\n\t\t\t\t\tcoureur\n\t\t\t\t\ttemps\n\t\t\t\t\tpoints\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t}\n\t\t}\n\t}\n": types.ClassementGeneraleDocument,
 };
@@ -31,6 +33,14 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery classementCategorie($ordre: GraphQLOrdering, $pagination: OffsetLimit, $categorie: UUID!) {\n\t\tclassements {\n\t\t\tparCategorie(ordre: $ordre, pagination: $pagination, id: $categorie) {\n\t\t\t\tdata {\n\t\t\t\t\tcoureur\n\t\t\t\t\ttemps\n\t\t\t\t\tpoints\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery classementCategorie($ordre: GraphQLOrdering, $pagination: OffsetLimit, $categorie: UUID!) {\n\t\tclassements {\n\t\t\tparCategorie(ordre: $ordre, pagination: $pagination, id: $categorie) {\n\t\t\t\tdata {\n\t\t\t\t\tcoureur\n\t\t\t\t\ttemps\n\t\t\t\t\tpoints\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery categories($page: OffsetLimit!) {\n\t\tcategories(pagination: $page) {\n\t\t\tlimit\n\t\t\ttotal\n\t\t\tdata {\n\t\t\t\tdesignation\n\t\t\t\tidCategorie\n\t\t\t}\n\t\t\toffset\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery categories($page: OffsetLimit!) {\n\t\tcategories(pagination: $page) {\n\t\t\tlimit\n\t\t\ttotal\n\t\t\tdata {\n\t\t\t\tdesignation\n\t\t\t\tidCategorie\n\t\t\t}\n\t\t\toffset\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

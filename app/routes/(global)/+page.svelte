@@ -5,6 +5,7 @@
 	import { Client, fetchExchange, setContextClient } from '@urql/svelte';
 	import { TabItem, Tabs } from 'flowbite-svelte';
 	import type { PageServerData } from './$types';
+	import ClassementParCategorie from '$lib/global/componnents/classement/categorie/ClassementParCategorie.svelte';
 
 	export let data: PageServerData;
 	setContextClient(
@@ -27,5 +28,8 @@
 	</TabItem>
 	<TabItem title="Par Equipe">
 		<Equipes />
+	</TabItem>
+	<TabItem title="Par categorie">
+		<ClassementParCategorie />
 	</TabItem>
 </Tabs>
