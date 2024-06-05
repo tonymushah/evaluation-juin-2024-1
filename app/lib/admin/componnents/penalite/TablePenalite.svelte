@@ -23,7 +23,12 @@
 		<TablePenaliteHead />
 		<TableBody tableBodyClass="divide-y">
 			{#each $data as class_}
-				<Row etape={class_.etape} equipe={class_.equipe} temps={class_.temps} />
+				<Row etape={class_.etape} equipe={class_.equipe} temps={class_.temps}>
+					<form slot="fourth-col" method="post" action="?/delete">
+						<input hidden name="penalite" value={class_.id} />
+						<Button type="submit">Delete</Button>
+					</form>
+				</Row>
 			{/each}
 		</TableBody>
 	</Table>
