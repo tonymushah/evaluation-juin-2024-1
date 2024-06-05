@@ -8,6 +8,7 @@
 	export let kilometrage: number;
 	export let dateDebut: Date;
 	export let dateFin: Date | undefined = undefined;
+	export let nbCoureur: number = 0;
 </script>
 
 <TableBodyRow
@@ -25,6 +26,9 @@
 	</TableBodyCell>
 	<TableBodyCell>
 		{nom}
+	</TableBodyCell>
+	<TableBodyCell>
+		{nbCoureur}
 	</TableBodyCell>
 	<TableBodyCell>
 		{kilometrage}

@@ -12,8 +12,10 @@ const query = graphql(`
 					rang
 					depart
 					nom
-					nbCoureurParEquipe
 					longueur
+					coureur(pagination: { limit: 1, offset: 0 }) {
+						total
+					}
 				}
 				offset
 				limit
@@ -53,7 +55,7 @@ export default function getClassement(): ClassementGlobal {
 						rang: e.rang,
 						depart: new Date(e.depart),
 						finished: e.finished != undefined ? new Date(e.finished) : undefined,
-						nbCoureur: e.nbCoureurParEquipe,
+						nbCoureur: e.coureur.total,
 						nom: e.nom,
 						longueur: Number(e.longueur)
 					}))

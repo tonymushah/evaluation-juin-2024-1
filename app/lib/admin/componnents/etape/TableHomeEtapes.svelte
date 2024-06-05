@@ -20,6 +20,7 @@
 	<TableHead>
 		<TableHeadCell>Rang</TableHeadCell>
 		<TableHeadCell>Nom etape</TableHeadCell>
+		<TableHeadCell>Nb Coureurs</TableHeadCell>
 		<TableHeadCell>Kilometrage</TableHeadCell>
 		<TableHeadCell>Date Debut</TableHeadCell>
 		<TableHeadCell>Date Fin</TableHeadCell>
@@ -32,6 +33,7 @@
 				kilometrage={class_.longueur}
 				dateDebut={class_.depart}
 				dateFin={class_.finished}
+				nbCoureur={class_.nbCoureur}
 			/>
 		{/each}
 	</TableBody>
