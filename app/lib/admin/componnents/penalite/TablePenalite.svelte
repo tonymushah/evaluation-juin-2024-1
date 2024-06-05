@@ -4,6 +4,7 @@
 	import { Button, Table, TableBody } from 'flowbite-svelte';
 	import getClassement from './query';
 	import { onMount } from 'svelte';
+	import { slide } from 'svelte/transition';
 
 	const { data, hasNext, isLoading, reset, next } = getClassement();
 	onMount(async () => {
@@ -11,20 +12,26 @@
 	});
 </script>
 
-{#if $isLoading}
-	<h3>Loading...</h3>
-{/if}
-
 <Button disabled={$isLoading} on:click={reset}>Reset</Button>
 
-<Table color="blue">
-	<TablePenaliteHead />
-	<TableBody tableBodyClass="divide-y">
-		{#each $data as class_}
-			<Row etape={class_.etape} equipe={class_.equipe} temps={class_.temps} />
-		{/each}
-	</TableBody>
-</Table>
+{#if $isLoading}
+	<h3 transition:slide>Loading...</h3>
+{/if}
+
+{#if $data.length > 0}
+	<Table color="blue">
+		<TablePenaliteHead />
+		<TableBody tableBodyClass="divide-y">
+			{#each $data as class_}
+				<Row etape={class_.etape} equipe={class_.equipe} temps={class_.temps} />
+			{/each}
+		</TableBody>
+	</Table>
+{:else}
+	<div class="flex w-full justify-center items-center">
+		<h2>Aucune penalite en cours...</h2>
+	</div>
+{/if}
 
 {#if $hasNext && !$isLoading}
 	<div class="flex w-full items-center justify-center">
@@ -32,7 +39,9 @@
 			disabled={$isLoading}
 			on:click={async () => {
 				await next();
-			}}>Next</Button
+			}}
 		>
+			Next
+		</Button>
 	</div>
 {/if}

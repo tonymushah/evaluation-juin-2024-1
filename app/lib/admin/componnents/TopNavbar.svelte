@@ -11,6 +11,7 @@
 		</NavBrand>
 		<NavHamburger />
 		<NavUl>
+			<NavLi href={route('/admin/penalite')}>Penalites</NavLi>
 			<NavLi class="items-center justify-center" href={route('/admin/import')}>Imports</NavLi>
 			<NavLi href={route('/admin/reset-db')}>Reset Database</NavLi>
 		</NavUl>
