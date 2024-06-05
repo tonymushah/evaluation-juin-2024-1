@@ -153,6 +153,7 @@ impl<T> Paginated<T> {
     }
 }
 
+#[allow(dead_code)]
 pub(crate) fn get_pool(ctx: &async_graphql::Context<'_>) -> crate::Result<crate::DbPoolConnection> {
     ctx.pool()
 }
