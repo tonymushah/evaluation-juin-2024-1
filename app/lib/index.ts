@@ -6,6 +6,26 @@ export const brand = 'Utlimate Team Race';
 
 export const tempsRegex = /(?<heures>[\d+]*):(?<minutes>[\d]*):(?<secondes>[\d]*)/gm;
 
+export function _temps(temps: unknown): number | undefined {
+	if (typeof temps == 'string') {
+		const tmpRegRes = tempsRegex.exec(temps);
+		if (tmpRegRes != null) {
+			const heures = Number(tmpRegRes.groups?.heures);
+			const minutes = Number(tmpRegRes.groups?.minutes);
+			const secondes = Number(tmpRegRes.groups?.secondes);
+			if (isFinite(heures) && isFinite(minutes) && isFinite(secondes)) {
+				return toSecond(heures, minutes, secondes);
+			}
+		}
+		const temps_num = Number(temps);
+		if (isFinite(temps_num)) {
+			return temps_num;
+		}
+	} else if (typeof temps == 'number') {
+		return temps;
+	}
+}
+
 export function formatSecond(a: number) {
 	const seconde = a % 60;
 	const b = (a - seconde) / 60;

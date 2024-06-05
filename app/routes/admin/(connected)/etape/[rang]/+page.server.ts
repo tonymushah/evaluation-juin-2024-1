@@ -2,7 +2,7 @@ import adminServerClient from '$lib/admin/client.server';
 import { graphql } from '$lib/admin/gql';
 import { error, redirect } from '@sveltejs/kit';
 import type { Action, Actions, PageServerLoad } from './$types';
-import { tempsRegex, toSecond } from '$lib';
+import { tempsRegex, toSecond, _temps as _t } from '$lib';
 import { route } from '$lib/ROUTES';
 
 export const ssr = true;
@@ -78,21 +78,7 @@ export const load: PageServerLoad = async ({ params, url }) => {
 
 function _temps(data: FormData): number | undefined {
 	const temps = data.get('temps');
-	if (typeof temps == 'string') {
-		const tmpRegRes = tempsRegex.exec(temps);
-		if (tmpRegRes != null) {
-			const heures = Number(tmpRegRes.groups?.heures);
-			const minutes = Number(tmpRegRes.groups?.minutes);
-			const secondes = Number(tmpRegRes.groups?.secondes);
-			if (isFinite(heures) && isFinite(minutes) && isFinite(secondes)) {
-				return toSecond(heures, minutes, secondes);
-			}
-		}
-		const temps_num = Number(temps);
-		if (isFinite(temps_num)) {
-			return temps_num;
-		}
-	}
+	return _t(temps);
 }
 
 const add_arrivee_mutation = graphql(`

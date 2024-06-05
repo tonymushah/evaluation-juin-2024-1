@@ -7,7 +7,7 @@
 
 <TableBodyRow>
 	<TableBodyCell>{etape}</TableBodyCell>
-	<TableBodyRow>{equipe}</TableBodyRow>
+	<TableBodyCell>{equipe}</TableBodyCell>
 	<TableBodyCell>{temps}</TableBodyCell>
 	<TableBodyCell>
 		<slot name="fourth-col" />

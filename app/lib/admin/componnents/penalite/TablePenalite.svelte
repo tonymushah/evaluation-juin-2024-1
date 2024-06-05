@@ -19,7 +19,7 @@
 {/if}
 
 {#if $data.length > 0}
-	<Table color="blue">
+	<Table color="red">
 		<TablePenaliteHead />
 		<TableBody tableBodyClass="divide-y">
 			{#each $data as class_}

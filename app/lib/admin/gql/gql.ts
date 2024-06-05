@@ -22,6 +22,8 @@ const documents = {
     "\n\tmutation importPoints($file: Upload!) {\n\t\timport {\n\t\t\tpoints(file: $file) {\n\t\t\t\trang\n\t\t\t\tvaleur\n\t\t\t}\n\t\t}\n\t}\n": types.ImportPointsDocument,
     "\n\tmutation importEtapes($file: Upload!) {\n\t\timport {\n\t\t\tetapes(file: $file) {\n\t\t\t\trang\n\t\t\t\tdepart\n\t\t\t\tfinished\n\t\t\t\tnbCoureurParEquipe\n\t\t\t}\n\t\t}\n\t}\n": types.ImportEtapesDocument,
     "\n\tmutation importResultats($file: Upload!) {\n\t\timport {\n\t\t\tresultats(file: $file) {\n\t\t\t\tidTempsCoureur\n\t\t\t\ttemps\n\t\t\t\tpoints\n\t\t\t\tequipeCoureur\n\t\t\t\tetape\n\t\t\t}\n\t\t}\n\t}\n": types.ImportResultatsDocument,
+    "\n\tmutation addPenaliteAction($input: PenaliteInput!) {\n\t\tpenalite {\n\t\t\tupsert(input: $input) {\n\t\t\t\tetape\n\t\t\t\tequipe\n\t\t\t\tvaleur\n\t\t\t}\n\t\t}\n\t}\n": types.AddPenaliteActionDocument,
+    "\n\tmutation removePenaliteAction($input: UUID!) {\n\t\tpenalite {\n\t\t\tremove(id: $input) {\n\t\t\t\tetape\n\t\t\t\tequipe\n\t\t\t\tvaleur\n\t\t\t}\n\t\t}\n\t}\n": types.RemovePenaliteActionDocument,
     "\n\tmutation resetDB {\n\t\tresetDb\n\t}\n": types.ResetDbDocument,
 };
 
@@ -75,6 +77,14 @@ export function graphql(source: "\n\tmutation importEtapes($file: Upload!) {\n\t
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\tmutation importResultats($file: Upload!) {\n\t\timport {\n\t\t\tresultats(file: $file) {\n\t\t\t\tidTempsCoureur\n\t\t\t\ttemps\n\t\t\t\tpoints\n\t\t\t\tequipeCoureur\n\t\t\t\tetape\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation importResultats($file: Upload!) {\n\t\timport {\n\t\t\tresultats(file: $file) {\n\t\t\t\tidTempsCoureur\n\t\t\t\ttemps\n\t\t\t\tpoints\n\t\t\t\tequipeCoureur\n\t\t\t\tetape\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tmutation addPenaliteAction($input: PenaliteInput!) {\n\t\tpenalite {\n\t\t\tupsert(input: $input) {\n\t\t\t\tetape\n\t\t\t\tequipe\n\t\t\t\tvaleur\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation addPenaliteAction($input: PenaliteInput!) {\n\t\tpenalite {\n\t\t\tupsert(input: $input) {\n\t\t\t\tetape\n\t\t\t\tequipe\n\t\t\t\tvaleur\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tmutation removePenaliteAction($input: UUID!) {\n\t\tpenalite {\n\t\t\tremove(id: $input) {\n\t\t\t\tetape\n\t\t\t\tequipe\n\t\t\t\tvaleur\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation removePenaliteAction($input: UUID!) {\n\t\tpenalite {\n\t\t\tremove(id: $input) {\n\t\t\t\tetape\n\t\t\t\tequipe\n\t\t\t\tvaleur\n\t\t\t}\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

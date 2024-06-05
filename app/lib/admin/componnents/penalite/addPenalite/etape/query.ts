@@ -30,7 +30,7 @@ export default function getClassement(): ClassementGlobal {
 	let offset = 0;
 	let limit = 10;
 	async function next() {
-		if (!get(isLoading)) {
+		if (get(isLoading) == false) {
 			isLoading.set(true);
 			const res = await client
 				.query(query, {
