@@ -4,11 +4,12 @@
 	export let coureur: string;
 	export let points: number;
 	export let temps: number;
+	export let bg: string = 'inherit';
 	$: temps_ = formatSecond(temps);
 	$: isPoints = points > 1;
 </script>
 
-<TableBodyRow>
+<TableBodyRow style="background-color : {bg};">
 	<TableBodyCell>{coureur}</TableBodyCell>
 	<TableBodyCell>
 		{points}
