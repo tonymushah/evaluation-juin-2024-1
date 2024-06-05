@@ -2,7 +2,7 @@
 	import { brand } from '$lib';
 	import Equipes from '$lib/global/componnents/classement/equipe/TableClassmmentEquipe.svelte';
 	import Generale from '$lib/global/componnents/classement/general/TableClassmmentGenerale.svelte';
-	import { Client, cacheExchange, fetchExchange, setContextClient } from '@urql/svelte';
+	import { Client, fetchExchange, setContextClient } from '@urql/svelte';
 	import { TabItem, Tabs } from 'flowbite-svelte';
 	import type { PageServerData } from './$types';
 
@@ -10,7 +10,7 @@
 	setContextClient(
 		new Client({
 			url: data.client_url,
-			exchanges: [fetchExchange, cacheExchange]
+			exchanges: [fetchExchange]
 		})
 	);
 </script>

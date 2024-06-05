@@ -69,6 +69,7 @@
 					equipe={coureur.equipe.nom}
 					dosard={coureur.coureur.numeroDosard}
 					arrivee={typeof coureur.temps == 'number' ? coureur.temps : undefined}
+					points={typeof coureur.points == 'number' ? coureur.points : undefined}
 				/>
 			{/each}
 		</TableBody>

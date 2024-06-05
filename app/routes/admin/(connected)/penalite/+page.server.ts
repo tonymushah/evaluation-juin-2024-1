@@ -42,6 +42,7 @@ export const actions = {
 				message: 'Invalid Input'
 			});
 		} else {
+			console.log(equipe, etape, temps);
 			const res = await adminServerClient
 				.mutation(addMutation, {
 					input: {
