@@ -8,7 +8,7 @@ use crate::{
     graphql::{objects::order::GraphQLOrdering, GetPoolConnection, OffsetLimit, ResultsData},
     models::{
         classement::classement_categorie_equipe::ClassementCategorieEquipe,
-        coureur_point::CoueurPoint, equipe_coureur::VEquipeCoureur, Paginate,
+        coureur_point::CoueurPoint, equipe::Equipe, equipe_coureur::VEquipeCoureur, Paginate,
     },
 };
 
@@ -79,6 +79,17 @@ impl EquipeQueries {
                 .paginate_with_param(pagination)
                 .to_results_data::<ClassementCategorieEquipe>(&mut pool)?
                 .map_into())
+        })
+        .await
+    }
+    pub async fn current(&self, ctx: &Context<'_>) -> crate::Result<Equipe> {
+        let current = ctx.get_current_equipe()?;
+        ctx.use_pool(move |mut pool| {
+            use crate::schema::equipe::dsl::*;
+            Ok(equipe
+                .filter(id_equipe.eq(current.0))
+                .select(Equipe::as_select())
+                .get_result(&mut pool)?)
         })
         .await
     }
