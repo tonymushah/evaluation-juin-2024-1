@@ -69,6 +69,7 @@ export default function getClassement(ordre?: Readable<GraphQlOrdering>): Classe
 		error: readonly(error),
 		next,
 		reset() {
+			data.set([]);
 			offset = 0;
 			next();
 		},
