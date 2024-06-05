@@ -80,6 +80,7 @@ export type AdminMutations = {
   logout: Scalars['Boolean']['output'];
   penalite: PenaliteMuations;
   resetDb: Scalars['Boolean']['output'];
+  truncateCategories: Scalars['Boolean']['output'];
 };
 
 

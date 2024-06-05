@@ -23,6 +23,7 @@ type AdminMutations {
 	logout: Boolean!
 	penalite: PenaliteMuations!
 	generateCategories: Int!
+	truncateCategories: Boolean!
 }
 
 type AdminQueries {
@@ -148,7 +149,7 @@ type Penalite {
 }
 
 input PenaliteInput {
-	idPenalite: UUID! = "cd9964e9-851a-4e88-b60a-3941ce721625"
+	idPenalite: UUID! = "cc01598c-b677-4270-860c-2cf7ed6134d4"
 	etape: Int!
 	valeur: Int!
 	equipe: UUID!
