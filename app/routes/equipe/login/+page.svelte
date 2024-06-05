@@ -12,11 +12,11 @@
 			<form method="post" class=" w-11/12 flex flex-col gap-5">
 				<div>
 					<Label class="mb-2" for="pseudo">Pseudo de l'equipe</Label>
-					<Input name="nom" type="text" id="pseudo" placeholder="Vautour" required />
+					<Input name="pseudo" type="text" id="pseudo" placeholder="Vautour" required />
 				</div>
 				<div>
 					<Label class="mb-2" for="password">Mot de passe</Label>
-					<Input name="password" type="text" id="password" placeholder="Password" required />
+					<Input name="password" type="password" id="password" placeholder="Password" required />
 				</div>
 				<Button type="submit">Se Connecter</Button>
 			</form>

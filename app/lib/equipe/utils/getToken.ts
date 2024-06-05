@@ -1,6 +1,5 @@
 import cookies from 'js-cookie';
-
-export const CLIENT_TOKEN_KEY = 'equipe-token';
+import { CLIENT_TOKEN_KEY } from './tokenKey';
 
 export default function getToken() {
 	const token = cookies.get()[CLIENT_TOKEN_KEY];
