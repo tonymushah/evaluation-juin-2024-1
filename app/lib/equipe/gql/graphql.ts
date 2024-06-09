@@ -198,6 +198,11 @@ export type VequipeCoureur = {
   points?: Maybe<Scalars['Int']['output']>;
 };
 
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'EquipeQueries', current: { __typename?: 'Equipe', pseudo: string, nom: string } };
+
 export type EquipeLoginMutationVariables = Exact<{
   user: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -207,4 +212,5 @@ export type EquipeLoginMutationVariables = Exact<{
 export type EquipeLoginMutation = { __typename?: 'EquipeMutations', login: string };
 
 
+export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"current"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pseudo"}},{"kind":"Field","name":{"kind":"Name","value":"nom"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
 export const EquipeLoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"equipeLogin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}]}}]} as unknown as DocumentNode<EquipeLoginMutation, EquipeLoginMutationVariables>;

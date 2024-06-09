@@ -1,16 +1,9 @@
 import equipeServerClient from '$lib/equipe/client.server';
 import { graphql } from '$lib/equipe/gql';
+import currentEquipeQuery from '$lib/equipe/utils/queries/currentEquipe';
 import { CLIENT_TOKEN_KEY } from '$lib/equipe/utils/tokenKey';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-
-const query = graphql(`
-	query me {
-		current {
-			pseudo
-			nom
-		}
-	}
-`);
 
 export const load: PageServerLoad = async ({ cookies }) => {
 	let token = cookies.get(CLIENT_TOKEN_KEY);
@@ -18,7 +11,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	headers.append('authorization', token ?? '');
 	const data = await equipeServerClient
 		.query(
-			query,
+			currentEquipeQuery,
 			{},
 			{
 				fetchOptions: {
@@ -27,4 +20,15 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			}
 		)
 		.toPromise();
+	if (data.data) {
+		return {
+			current: data.data.current
+		};
+	} else if (data.error) {
+		return error(500, data.error);
+	} else {
+		return error(500, {
+			message: 'Unexepected error'
+		});
+	}
 };
