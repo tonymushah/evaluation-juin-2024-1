@@ -13,7 +13,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n\tquery me {\n\t\tcurrent {\n\t\t\tpseudo\n\t\t\tnom\n\t\t}\n\t}\n": types.MeDocument,
+    "\n\tquery currentEquipe {\n\t\tcurrent {\n\t\t\tpseudo\n\t\t\tnom\n\t\t\tidEquipe\n\t\t}\n\t}\n": types.CurrentEquipeDocument,
     "\n\tmutation equipeLogin($user: String!, $password: String!) {\n\t\tlogin(username: $user, password: $password)\n\t}\n": types.EquipeLoginDocument,
 };
 
@@ -34,7 +34,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n\tquery me {\n\t\tcurrent {\n\t\t\tpseudo\n\t\t\tnom\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery me {\n\t\tcurrent {\n\t\t\tpseudo\n\t\t\tnom\n\t\t}\n\t}\n"];
+export function graphql(source: "\n\tquery currentEquipe {\n\t\tcurrent {\n\t\t\tpseudo\n\t\t\tnom\n\t\t\tidEquipe\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery currentEquipe {\n\t\tcurrent {\n\t\t\tpseudo\n\t\t\tnom\n\t\t\tidEquipe\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
