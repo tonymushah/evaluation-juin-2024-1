@@ -1,12 +1,13 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
 import { kitRoutes } from 'vite-plugin-kit-routes';
+import type { KIT_ROUTES } from './app/lib/ROUTES';
 
 export default defineConfig({
 	plugins: [
 		sveltekit(),
-		kitRoutes({
-			routes_path: './app/routes',
+		kitRoutes<KIT_ROUTES>({
+			routes_path: 'app/routes',
 			generated_file_path: 'app/lib/ROUTES.ts'
 		})
 	],

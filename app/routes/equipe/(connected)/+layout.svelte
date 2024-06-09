@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { Client, fetchExchange, setContextClient } from '@urql/svelte';
 	import type { LayoutServerData } from './$types';
-	import getToken from '$lib/equipe/utils/getToken';
+	import TopNavBar from '$lib/equipe/componnents/TopNavBar.svelte';
 
 	export let data: LayoutServerData;
-	const token = getToken();
 	const headers = new Headers();
-	headers.append('authorization', token!);
+	headers.append('authorization', data.token);
 	setContextClient(
 		new Client({
 			url: data.client_url,
@@ -17,6 +16,8 @@
 		})
 	);
 </script>
+
+<TopNavBar />
 
 <div class="content ml-5 mr-5 mt-5">
 	<slot />

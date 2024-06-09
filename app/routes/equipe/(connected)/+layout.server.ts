@@ -7,9 +7,11 @@ import { route } from '$lib/ROUTES';
 export const ssr = false;
 
 export const load: LayoutServerLoad = async function ({ cookies }) {
-	if (cookies.get(CLIENT_TOKEN_KEY)) {
+	const token = cookies.get(CLIENT_TOKEN_KEY);
+	if (token) {
 		return {
-			client_url: `${BACKEND_URL}/equipe`
+			client_url: `${BACKEND_URL}/equipe`,
+			token
 		};
 	} else {
 		redirect(300, route('/equipe/login'));

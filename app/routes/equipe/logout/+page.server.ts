@@ -5,7 +5,7 @@ import { route } from '$lib/ROUTES';
 
 export const actions = {
 	default: async ({ cookies }) => {
-		cookies.delete(CLIENT_TOKEN_KEY, { path: '' });
+		cookies.delete(CLIENT_TOKEN_KEY, { path: '/equipe' });
 		return redirect(300, route('/equipe/login'));
 	}
 } satisfies Actions;

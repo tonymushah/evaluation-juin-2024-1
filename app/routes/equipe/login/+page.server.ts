@@ -37,7 +37,7 @@ export const actions = {
 			.toPromise();
 		if (res.data) {
 			cookies.set(CLIENT_TOKEN_KEY, res.data.login, {
-				path: '/'
+				path: '/equipe'
 			});
 			return redirect(300, route('/equipe'));
 		} else if (res.error) {
