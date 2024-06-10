@@ -1,11 +1,11 @@
 <script lang="ts">
 	export let value: string | undefined = undefined;
 	import { Select, type SelectOptionType } from 'flowbite-svelte';
-	import getClassement from './query';
+	import getEtapeClassement from './query';
 	import { onMount } from 'svelte';
 	import { derived, get } from 'svelte/store';
 
-	const { data, hasNext, isLoading, reset, next } = getClassement();
+	const { data, hasNext, isLoading, reset, next } = getEtapeClassement();
 	onMount(async () => {
 		await reset();
 		const first = get(data)[0];

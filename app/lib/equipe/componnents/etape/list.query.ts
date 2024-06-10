@@ -1,35 +1,41 @@
 import { get_paginated_init_data, type PaginatedData } from '$lib';
-import { graphql } from '$lib/global/gql';
-import type { EquipePoint, GraphQlOrdering } from '$lib/global/gql/graphql';
-import { get, readonly, type Readable } from 'svelte/store';
+import { graphql } from '$lib/equipe/gql';
+import { readonly, get } from 'svelte/store';
 
-const query = graphql(`
-	query categories($page: OffsetLimit!) {
-		categories(pagination: $page) {
-			limit
-			total
-			data {
-				designation
-				idCategorie
+export const query = graphql(`
+	query listEtapes($page: OffsetLimit!) {
+		etape {
+			list(pagination: $page) {
+				data {
+					rang
+					longueur
+					nom
+					depart
+					finished
+				}
+				limit
+				offset
+				total
 			}
-			offset
 		}
 	}
 `);
 
-type CategorieSelect = {
-	id: string;
+type EtapeListItem = {
+	id: number;
 	nom: string;
+	etat?: string;
+	depart?: Date;
 };
 
-type ClassementGlobal = PaginatedData<CategorieSelect>;
+type ClassementGlobal = PaginatedData<EtapeListItem>;
 
-export default function getEtapeClassement(): ClassementGlobal {
-	const { client, data, isLoading, hasNext, error } = get_paginated_init_data<CategorieSelect>();
+export default function getClassement(): ClassementGlobal {
+	const { client, data, isLoading, hasNext, error } = get_paginated_init_data<EtapeListItem>();
 	let offset = 0;
 	let limit = 10;
 	async function next() {
-		if (!get(isLoading)) {
+		if (!get(isLoading) && get(hasNext)) {
 			isLoading.set(true);
 			const res = await client
 				.query(query, {
@@ -37,12 +43,14 @@ export default function getEtapeClassement(): ClassementGlobal {
 				})
 				.toPromise();
 			if (res.data) {
-				const resu = res.data.categories;
+				const resu = res.data.etape.list;
 				data.update((a) => {
 					a.push(
 						...resu.data.map((e) => ({
-							id: e.idCategorie,
-							nom: e.designation
+							id: e.rang,
+							nom: e.nom,
+							depart: new Date(e.depart),
+							etat: e.finished == undefined ? 'Inconnue' : 'Finie'
 						}))
 					);
 					return a;
@@ -60,11 +68,7 @@ export default function getEtapeClassement(): ClassementGlobal {
 		}
 	}
 	const obs = new IntersectionObserver(() => {
-		return isLoading.subscribe((is) => {
-			if (!is) {
-				next();
-			}
-		});
+		if (!get(isLoading) || get(hasNext)) next();
 	});
 	return {
 		data: readonly(data),

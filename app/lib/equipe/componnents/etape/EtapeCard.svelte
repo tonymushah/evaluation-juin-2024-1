@@ -3,11 +3,11 @@
 	import { Badge, Card } from 'flowbite-svelte';
 	import type { ComponentProps } from 'svelte';
 	import JoueurEtapeCard from './JoueurEtapeCard.svelte';
-	export let id: string;
+	export let id: number;
 	export let etat: string;
 	export let nom: string;
-	export let points: number = 0;
-	export let joueurs: ComponentProps<JoueurEtapeCard>[] = [];
+	let points: number = 0;
+	let joueurs: ComponentProps<JoueurEtapeCard>[] = [];
 </script>
 
 <div class="flex bg-slate-300 rounded flex-col w-full">
