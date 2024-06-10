@@ -1,7 +1,7 @@
 import { graphql } from '$lib/equipe/gql';
 import { getContextClient, queryStore } from '@urql/svelte';
 
-const query = graphql(`
+export const query = graphql(`
 	query etapeCoureurs($etape: Int!) {
 		etape {
 			joueurs(etape: $etape) {
