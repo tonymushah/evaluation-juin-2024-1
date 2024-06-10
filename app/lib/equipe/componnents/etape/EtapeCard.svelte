@@ -3,11 +3,22 @@
 	import { Badge, Card } from 'flowbite-svelte';
 	import type { ComponentProps } from 'svelte';
 	import JoueurEtapeCard from './JoueurEtapeCard.svelte';
+	import getEtapeCoueur from './joueurs.query';
+	import { derived } from 'svelte/store';
 	export let id: number;
 	export let etat: string;
 	export let nom: string;
-	let points: number = 0;
-	let joueurs: ComponentProps<JoueurEtapeCard>[] = [];
+	$: queryRes = getEtapeCoueur(id);
+	$: joueurs = derived(
+		queryRes,
+		(js) =>
+			js.data?.etape.joueurs.map<ComponentProps<JoueurEtapeCard> & { id: number }>((j) => ({
+				id: j.coureur,
+				nom: j.nomCoureur,
+				points: typeof j.points == 'number' ? j.points : 0
+			})) ?? []
+	);
+	$: points = derived(joueurs, (js) => js.map((j) => j.points ?? 0).reduce((ac, c) => ac + c, 0));
 </script>
 
 <div class="flex bg-slate-300 rounded flex-col w-full">
@@ -17,11 +28,11 @@
 			{nom}
 		</a>
 		<p>
-			Points: {points}
+			Points: {$points}
 		</p>
 	</div>
 	<div class="flex flex-wrap gap-2 m-1">
-		{#each joueurs as joueur}
+		{#each $joueurs as joueur}
 			<JoueurEtapeCard {...joueur} />
 		{:else}
 			<h3 class="text-md">Pas de joueur selectionne</h3>
