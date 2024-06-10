@@ -17,7 +17,7 @@
 	import type { LayoutServerData } from './$types';
 	import { setContext } from 'svelte';
 	export let data: LayoutServerData;
-	const points = setContext(pointsContextKey, writable(0));
+	const points = setContext(pointsContextKey, writable(data.points));
 </script>
 
 <div class="grid grid-cols-2">
@@ -25,9 +25,9 @@
 	<p class="text-lg">
 		Points: {$points}
 		{#if $points > 1}
-			pts
+			points
 		{:else}
-			pt
+			point
 		{/if}
 	</p>
 </div>
