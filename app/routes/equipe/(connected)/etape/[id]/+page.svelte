@@ -19,11 +19,6 @@
 	]);
 </script>
 
-<div class="grid grid-cols-2">
-	<h2 class="text-xl font-semibold underline">%Nom Etape%</h2>
-	<p class="text-lg">Points: %nombre_points% pts</p>
-</div>
-
 <div class="flex flex-wrap gap-2 mt-3">
 	{#each $testData as coueur}
 		<CoueurSelector
