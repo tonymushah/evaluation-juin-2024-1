@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { derived, readonly, writable, type Readable, type Writable } from 'svelte/store';
+	import { derived, get, readonly, writable, type Readable, type Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
 	import { query as joueursQuery } from '$lib/equipe/componnents/etape/joueurs.query';
 
@@ -46,14 +46,14 @@
 		}
 	`);
 	function initSelectedJoueurStore(client: Client, etape: number): SelectedJoueurStore {
-		let isLoading = false;
+		const isLoading = writable(false);
 		const write = writable<SelectedJoueurMap>(new Map(), (set, update) => {
-			isLoading = true;
-			const sub = client
+			client
 				.query(joueursQuery, {
 					etape
 				})
-				.subscribe((res) => {
+				.toPromise()
+				.then((res) => {
 					const joueurs = res.data?.etape.joueurs;
 					if (joueurs) {
 						update((map) => {
@@ -62,24 +62,24 @@
 							});
 							return map;
 						});
-						isLoading = false;
-					} else if (res.error) {
-						isLoading = false;
 					}
+				})
+				.catch((e) => {
+					console.error(e);
 				});
-			return () => {
-				sub.unsubscribe();
-			};
 		});
 		async function start() {
-			if (!isLoading) {
-				isLoading = true;
+			console.log('start');
+			if (!get(isLoading)) {
+				isLoading.set(true);
 				await client
 					.query(joueursQuery, {
 						etape
 					})
+					.toPromise()
 					.then((res) => {
 						const joueurs = res.data?.etape.joueurs;
+						console.log(joueurs);
 						if (joueurs) {
 							write.update((map) => {
 								joueurs.forEach((j) => {
@@ -88,40 +88,72 @@
 								return map;
 							});
 						}
+					})
+					.finally(() => isLoading.set(false))
+					.catch((e) => {
+						console.error(e);
 					});
-				isLoading = false;
 			}
 		}
 		const read = readonly(write);
 		return setContext(selectedJoueursContextKey, {
 			async select(coureur) {
-				if (!isLoading) {
-					isLoading = true;
+				console.log('click');
+				if (!get(isLoading)) {
+					isLoading.set(true);
 					await client
 						.mutation(addCoureurToEtapeMutation, {
 							joueur: coureur,
 							etape
 						})
 						.toPromise()
-						.finally(() => (isLoading = false));
-					await this.start();
+						.then((e) => {
+							if (e.error) {
+								console.log(e.error);
+							}
+							return e;
+						})
+						.finally(() => isLoading.set(false))
+						.then(() => start())
+						.catch((e) => {
+							console.error(e);
+						});
 				}
 			},
 			async unselect(coureur) {
-				if (!isLoading) {
-					isLoading = true;
+				const is = get(isLoading);
+				if (!is) {
+					isLoading.set(true);
+					console.log('load');
 					await client
 						.mutation(removeCoureurToEtapeMutation, {
 							joueur: coureur,
 							etape
 						})
 						.toPromise()
-						.finally(() => (isLoading = false));
-					await this.start();
+						.then((e) => {
+							if (e.error) {
+								console.log(e.error);
+							}
+							return e;
+						})
+						.finally(() => isLoading.set(false))
+
+						.then(() => start())
+						.catch((e) => {
+							console.error(e);
+						});
 				}
 			},
 			listenToCoeur(coureur) {
-				return derived(write, (v) => v.get(coureur) ?? false);
+				return derived(read, (v) => {
+					const res = v.get(coureur);
+					if (typeof res == 'boolean') {
+						return res;
+					} else {
+						return false;
+					}
+				});
 			},
 			start,
 			...read
@@ -148,6 +180,10 @@
 	const selecteds = initSelectedJoueurStore(client, data.rang);
 </script>
 
+<svelte:head>
+	<title>Etape {data.nom_etape}</title>
+</svelte:head>
+
 <div class="grid grid-cols-2">
 	<h2 class="text-xl font-semibold underline">{data.nom_etape}</h2>
 	<p class="text-lg">
@@ -159,3 +195,5 @@
 		{/if}
 	</p>
 </div>
+
+<slot />

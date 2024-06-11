@@ -1,37 +1,37 @@
 <script lang="ts">
 	import CoueurSelector from '$lib/equipe/componnents/etape/page/CoueurSelector.svelte';
-	import type { ComponentProps } from 'svelte';
-	import { writable } from 'svelte/store';
+	import { onMount, type ComponentProps } from 'svelte';
+	import { get, writable } from 'svelte/store';
+	import { getSelectedJoueurStore } from './+layout.svelte';
+	import getClassement from '$lib/equipe/componnents/etape/listCoureur.query';
+	const { data, hasNext, isLoading, reset, obs } = getClassement();
+	let toObs: HTMLDivElement | undefined = undefined;
+	$: {
+		if (toObs) obs.observe(toObs);
+	}
+	onMount(async () => {
+		await reset();
+	});
 
-	const testData = writable<ComponentProps<CoueurSelector>[]>([
-		{
-			nom: 'Tony',
-			isSelected: false
-		},
-		{
-			nom: 'Akari',
-			isSelected: false
-		},
-		{
-			nom: 'Tomfy',
-			isSelected: false
-		}
-	]);
+	const selected = getSelectedJoueurStore();
 </script>
 
 <div class="flex flex-wrap gap-2 mt-3">
-	{#each $testData as coueur}
+	{#each $data as coueur}
 		<CoueurSelector
-			{...coueur}
+			nom={coueur.nom}
+			isSelected={selected.listenToCoeur(coueur.id)}
 			on:click={() => {
-				testData.update((c) => {
-					const selected = c.find((c) => c.nom == coueur.nom);
-					if (selected) {
-						selected.isSelected = !selected.isSelected;
-					}
-					return c;
-				});
+				if (!get(selected.listenToCoeur(coueur.id))) {
+					selected.select(coueur.id);
+				} else {
+					selected.unselect(coueur.id);
+				}
 			}}
 		/>
 	{/each}
 </div>
+
+{#if !$isLoading && $hasNext}
+	<div />
+{/if}
