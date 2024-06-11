@@ -149,7 +149,7 @@ type Penalite {
 }
 
 input PenaliteInput {
-	idPenalite: UUID! = "60306933-7b37-4dc8-b413-73fc923a3735"
+	idPenalite: UUID! = "cf867457-5f05-4bb8-b403-ebb042bdce80"
 	etape: Int!
 	valeur: Int!
 	equipe: UUID!

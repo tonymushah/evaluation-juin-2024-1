@@ -16,6 +16,7 @@ const documents = {
     "\n\tquery currentEtape($etape: Int!) {\n\t\tetape {\n\t\t\tunique(rang: $etape) {\n\t\t\t\tdepart\n\t\t\t\tfinished\n\t\t\t\tnom\n\t\t\t\trang\n\t\t\t\tlongueur\n\t\t\t}\n\t\t}\n\t}\n": types.CurrentEtapeDocument,
     "\n\tquery etapeCoureurs($etape: Int!) {\n\t\tetape {\n\t\t\tjoueurs(etape: $etape) {\n\t\t\t\tcoureur\n\t\t\t\tnomCoureur\n\t\t\t\tpoints\n\t\t\t}\n\t\t}\n\t}\n": types.EtapeCoureursDocument,
     "\n\tquery listEtapes($page: OffsetLimit!) {\n\t\tetape {\n\t\t\tlist(pagination: $page) {\n\t\t\t\tdata {\n\t\t\t\t\trang\n\t\t\t\t\tlongueur\n\t\t\t\t\tnom\n\t\t\t\t\tdepart\n\t\t\t\t\tfinished\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t}\n\t\t}\n\t}\n": types.ListEtapesDocument,
+    "\n\tquery listEquipeCoureur($page: OffsetLimit!) {\n\t\tlistCoureur(pagination: $page) {\n\t\t\tdata {\n\t\t\t\tdtn\n\t\t\t\tnomCoureur\n\t\t\t\tgenre\n\t\t\t\tpoints\n\t\t\t\tcoureur\n\t\t\t}\n\t\t\tlimit\n\t\t\toffset\n\t\t\ttotal\n\t\t}\n\t}\n": types.ListEquipeCoureurDocument,
     "\n\tquery currentEquipe {\n\t\tcurrent {\n\t\t\tpseudo\n\t\t\tnom\n\t\t\tidEquipe\n\t\t}\n\t}\n": types.CurrentEquipeDocument,
     "\n\t\tmutation addCoureurToEtape($etape: Int!, $joueur: Int!) {\n\t\t\tajouterJoueurToEtape(etape: $etape, joueur: $joueur) {\n\t\t\t\tidTempsCoureur\n\t\t\t\ttemps\n\t\t\t\tpoints\n\t\t\t\tequipeCoureur\n\t\t\t\tetape\n\t\t\t}\n\t\t}\n\t": types.AddCoureurToEtapeDocument,
     "\n\t\tmutation removeCoureurToEtape($etape: Int!, $joueur: Int!) {\n\t\t\tremoveJoueurToEtape(etape: $etape, joueur: $joueur) {\n\t\t\t\tidTempsCoureur\n\t\t\t\ttemps\n\t\t\t\tpoints\n\t\t\t\tequipeCoureur\n\t\t\t\tetape\n\t\t\t}\n\t\t}\n\t": types.RemoveCoureurToEtapeDocument,
@@ -48,6 +49,10 @@ export function graphql(source: "\n\tquery etapeCoureurs($etape: Int!) {\n\t\tet
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\tquery listEtapes($page: OffsetLimit!) {\n\t\tetape {\n\t\t\tlist(pagination: $page) {\n\t\t\t\tdata {\n\t\t\t\t\trang\n\t\t\t\t\tlongueur\n\t\t\t\t\tnom\n\t\t\t\t\tdepart\n\t\t\t\t\tfinished\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery listEtapes($page: OffsetLimit!) {\n\t\tetape {\n\t\t\tlist(pagination: $page) {\n\t\t\t\tdata {\n\t\t\t\t\trang\n\t\t\t\t\tlongueur\n\t\t\t\t\tnom\n\t\t\t\t\tdepart\n\t\t\t\t\tfinished\n\t\t\t\t}\n\t\t\t\tlimit\n\t\t\t\toffset\n\t\t\t\ttotal\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery listEquipeCoureur($page: OffsetLimit!) {\n\t\tlistCoureur(pagination: $page) {\n\t\t\tdata {\n\t\t\t\tdtn\n\t\t\t\tnomCoureur\n\t\t\t\tgenre\n\t\t\t\tpoints\n\t\t\t\tcoureur\n\t\t\t}\n\t\t\tlimit\n\t\t\toffset\n\t\t\ttotal\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery listEquipeCoureur($page: OffsetLimit!) {\n\t\tlistCoureur(pagination: $page) {\n\t\t\tdata {\n\t\t\t\tdtn\n\t\t\t\tnomCoureur\n\t\t\t\tgenre\n\t\t\t\tpoints\n\t\t\t\tcoureur\n\t\t\t}\n\t\t\tlimit\n\t\t\toffset\n\t\t\ttotal\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
